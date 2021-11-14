@@ -1,10 +1,14 @@
 import logo from "../logo-512.png";
-import "../styles/Navbar.css";
+import styles from "../styles/components/navbar.module.css";
 
 export default function Navbar() {
+    // TODO Ainda tem que fazer toda a lógica de pesquisa e login
+
     return (
-        <nav>
+        <nav className={styles.navbar}>
             <img src={logo} alt="Logo Airbnb" />
+            <input placeholder="Pesquise o que você procura aqui!" />
+            <button>Login</button>
         </nav>
     );
 }
