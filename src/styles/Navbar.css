@@ -1,0 +1,8 @@
+nav {
+    display: flex;
+    flex-direction: row;
+}
+
+nav > img {
+    width: 5rem;
+}
