@@ -1,3 +1,31 @@
 export default function ListagemAcomodacoes() {
-    return <h1>Acomodações</h1>;
+    return (
+        <h1>
+            Acomodações
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            aaa
+        </h1>
+    );
 }
