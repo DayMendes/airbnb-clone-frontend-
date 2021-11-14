@@ -1,9 +1,12 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 function App() {
     return (
         <>
-            <h1>AA</h1>
+            <nav>Navbar aqui</nav>
+            <Outlet />
+            <footer>Footer aqui</footer>
         </>
     );
 }
