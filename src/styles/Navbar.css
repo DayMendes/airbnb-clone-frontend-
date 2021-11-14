@@ -1,6 +1,8 @@
 nav {
     display: flex;
     flex-direction: row;
+
+    background: var(--red);
 }
 
 nav > img {
