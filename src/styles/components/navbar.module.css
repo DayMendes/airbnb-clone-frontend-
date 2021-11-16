@@ -31,6 +31,16 @@
     color: var(--text);
     text-align: center;
     font-size: 1.2rem;
+
+    transition: all 0.3s;
+}
+
+.navbar > input:hover {
+    box-shadow: 0px 2px 6px 2px rgba(255, 90, 95, 0.5);
+}
+
+.navbar > input:focus {
+    box-shadow: 0px 2px 6px 2px rgba(255, 90, 95, 0.5);
 }
 
 .navbar > button {
