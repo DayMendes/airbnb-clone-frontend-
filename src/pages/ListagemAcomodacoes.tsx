@@ -26,7 +26,6 @@ export default function ListagemAcomodacoes() {
         getAcomodacoes().then((acomodacoes) => {
             if (acomodacoes) {
                 setAcomodacoes(acomodacoes.data);
-                console.log(acomodacoes.data);
             }
         });
     }, []);
