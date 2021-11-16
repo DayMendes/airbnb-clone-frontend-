@@ -6,14 +6,17 @@ import App from "./App";
 import DetalhesAcomodacao from "./pages/DetalhesAcomodacao";
 import ListagemAcomodacoes from "./pages/ListagemAcomodacoes";
 import PaginaNaoEncontrada from "./pages/PaginaNaoEncontrada";
+import TelaInicial from './pages/TelaInicial';
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<App />}>
-                    <Route index element={<ListagemAcomodacoes />} />
-                    <Route path="/:accommodationId" element={<DetalhesAcomodacao />} />
+                    <Route index element ={<TelaInicial/>}/>
+                    <Route path="/acomodacoes" element={<ListagemAcomodacoes />}>
+                        <Route path=":accommodationId" element={<DetalhesAcomodacao />} />
+                    </Route>
                     <Route path="*" element={<PaginaNaoEncontrada />} />
                 </Route>
             </Routes>
