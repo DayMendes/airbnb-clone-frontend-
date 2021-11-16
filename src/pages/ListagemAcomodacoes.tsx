@@ -4,6 +4,8 @@ import { Acomodacao } from "../util/interfaces";
 
 import AcomodacaoCard from "../components/AcomodacaoCard";
 
+import styles from "../styles/pages/listagemAcomodacoes.module.css";
+
 export default function ListagemAcomodacoes() {
     const [acomodacoes, setAcomodacoes] = useState<Acomodacao[] | []>([]);
 
@@ -29,30 +31,10 @@ export default function ListagemAcomodacoes() {
     }, []);
 
     return (
-<<<<<<< HEAD
-        <>
-            <h1>Acomodações</h1>
+        <section className={styles.cardsWrapper}>
             {acomodacoes.map((acomodacao) => (
                 <AcomodacaoCard key={acomodacao._id} acomodacao={acomodacao} />
             ))}
-        </>
-=======
-        <h1>
-            Acomodações
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            aaa
-        </h1>
->>>>>>> ccdc0ea5789c2d02b050a1a849b11b833b6f0f3c
+        </section>
     );
 }
