@@ -14,17 +14,6 @@ export default function ListagemAcomodacoes() {
             <br />
             <br />
             <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             aaa
         </h1>
     );
