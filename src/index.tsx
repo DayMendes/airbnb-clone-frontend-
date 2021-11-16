@@ -13,10 +13,8 @@ ReactDOM.render(
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<App />}>
-                    <Route index element ={<TelaInicial/>}/>
-                    <Route path="/acomodacoes" element={<ListagemAcomodacoes />}>
-                        <Route path=":accommodationId" element={<DetalhesAcomodacao />} />
-                    </Route>
+                    <Route index element={<ListagemAcomodacoes />}/>
+                    <Route path="/:accommodationId" element={<DetalhesAcomodacao />} />
                     <Route path="*" element={<PaginaNaoEncontrada />} />
                 </Route>
             </Routes>

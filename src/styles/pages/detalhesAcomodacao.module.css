@@ -1,0 +1,47 @@
+.container {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    position: relative;
+
+    margin: 2rem 0;
+    padding: 1rem;
+
+    width: 70%;
+
+    border-radius: 10px;
+
+    background: var(--gray);
+    box-shadow: 2px 5px 5px 1px rgba(0, 0, 0, 0.2);
+
+    transition: all 0.2s;
+}
+
+.buttonReservar {
+    color: #FFF;
+    font-weight: bold;
+    background-color: var(--red);
+    padding: 5px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-top: 10px;
+
+    border-width: 0.1px;
+    border-radius: 5px;
+}
+
+.img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.informacoes {
+    flex: 1.2;
+}
+
+.reservar {
+    padding-left: 20px;
+    flex: 0.8;
+}

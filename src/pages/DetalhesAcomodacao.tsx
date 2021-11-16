@@ -1,12 +1,98 @@
-import { useEffect } from "react";
+import axios, { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
 import { useParams, Outlet } from "react-router-dom";
+import { Acomodacao } from "../util/interfaces";
+
+import DatePicker from "react-datepicker";
+import { registerLocale } from  "react-datepicker";
+import pt from 'date-fns/locale/pt-BR';
+
+import "react-datepicker/dist/react-datepicker.css";
+
+import styles from "../styles/pages/detalhesAcomodacao.module.css";
 
 export default function DetalhesAcomodacao() {
+    
+    registerLocale('pt-BR', pt);
+
     const urlParams: { accommodationId: string | undefined } = useParams();
+    const [acomodacao, setAcomodacao] = useState<Acomodacao|null>();
+    const [dataInicio, setDataInicio] = useState<Date>(new Date());
+    const [dataTermino, setDataTermino] = useState<Date>(new Date());
+    let id = urlParams.accommodationId;
 
     const apiUrl = process.env.REACT_APP_API_URL;
 
-    return <h1>Detalhes Acomodacao</h1>;
+    useEffect(() => {
+        async function getAcomodacoes() {
+            let response: AxiosResponse<Acomodacao>;
+            try {
+                response = await axios.get<Acomodacao>(`${apiUrl}/acomodacoes/${id}`);
+                return response;
+            } catch (err) {
+                setAcomodacao(null);
+            }
+        }
 
-    <Outlet/>
+        getAcomodacoes().then((acomodacao) => {
+            if (acomodacao) {
+                setAcomodacao(acomodacao.data);
+            }
+        });
+    }, []);
+
+    async function reservar(){
+        axios.post('http://localhost:4000/api/v1/reservas', {
+            idLocador: 1,
+            idAcomodacao: id,
+            dataDeInicio: dataInicio,
+            dataDeTermino: dataTermino
+          })
+          .then(function (response) {
+            alert(response);
+          })
+          .catch(function (error) {
+            alert(error);
+          });
+    }
+
+    return (
+        <section className={styles.container}>
+            {acomodacao != null ? (
+                <>
+                    <div className={styles.informacoes}>
+                        <img className={styles.img} src={acomodacao.imagem} alt={acomodacao?.descricao} />
+                        <h1>Informações sobre o local: </h1>
+                        <p>Tipo de acomodação: {acomodacao.categoria}</p>
+                        <p>Até {acomodacao.numeroDePessoas} pessoas.</p>
+                        <p>Comodidades: {acomodacao.comodidades.banheiros} banheiro(s), {acomodacao.comodidades.cozinha} cozinha(s)</p>
+                        <p> Regras: {(acomodacao.regras.animais) ? "permitido" : "proibido"} animais, {(acomodacao.regras.fumar) ? "permitido" : "proibido"} fumar</p>
+                        <p>Valor: R$ {acomodacao.preco}</p>
+                    </div>
+                    <div className={styles.reservar}>
+                        <h1>{acomodacao.nome} - {acomodacao.descricao}</h1>
+                        <p>Data de início da locação:</p>
+                        <DatePicker
+                            locale="pt-BR"
+                            selected={dataInicio} 
+                            onChange={(date) => setDataInicio(date as Date)} 
+                        />
+                        <p>Data de término da locação:</p>
+                        <DatePicker
+                            locale="pt-BR"
+                            selected={dataTermino} 
+                            onChange={(date) => setDataTermino(date as Date)} 
+                        />
+                        <button onClick={reservar} className={styles.buttonReservar}>Realizar reserva</button>
+                    </div>
+                </>
+            ) : (
+                <h1>Ops! Algo de errado aconteceu.</h1>
+            )}
+        </section>
+
+
+    );
+
+    <Outlet />
 }
