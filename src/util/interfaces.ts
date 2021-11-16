@@ -1,4 +1,5 @@
 export interface Acomodacao {
+    _id: string;
     nome: string;
     idLocador: string;
     descricao: string;

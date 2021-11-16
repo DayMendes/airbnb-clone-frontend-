@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from "axios";
-import { Acomodacao } from "../util/interfaces";
 import { useEffect, useState } from "react";
+import { Acomodacao } from "../util/interfaces";
+
+import AcomodacaoCard from "../components/AcomodacaoCard";
 
 export default function ListagemAcomodacoes() {
     const [acomodacoes, setAcomodacoes] = useState<Acomodacao[] | []>([]);
@@ -27,32 +29,11 @@ export default function ListagemAcomodacoes() {
     }, []);
 
     return (
-        <h1>
-            Acomodações
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            aaa
-        </h1>
+        <>
+            <h1>Acomodações</h1>
+            {acomodacoes.map((acomodacao) => (
+                <AcomodacaoCard key={acomodacao._id} acomodacao={acomodacao} />
+            ))}
+        </>
     );
 }
