@@ -7,7 +7,7 @@ export default function Navbar() {
     return (
         <nav className={styles.navbar}>
             <img src={logo} alt="Logo Airbnb" />
-            <input placeholder="Pesquise o que você procura aqui!" />
+            <input placeholder="Encontre o que você procura aqui!" />
             <button>Login</button>
         </nav>
     );
