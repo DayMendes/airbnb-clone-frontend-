@@ -19,6 +19,8 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+
+    display: flex;
 }
 
 .navbar input {
@@ -45,6 +47,26 @@
 
 .navbar input:focus {
     box-shadow: 0px 2px 6px 2px rgba(255, 90, 95, 0.5);
+}
+
+.navbar > form > button {
+    background: transparent;
+    border: none;
+}
+
+.navbar > form > button > img {
+    width: 2rem;
+
+    margin-left: 0.5rem;
+
+    cursor: pointer;
+
+    transition: all 0.15s;
+}
+
+.navbar > form > button > img:hover {
+    /* equivalent to color: var(--red) in svgs*/
+    filter: invert(39%) sepia(75%) saturate(1578%) hue-rotate(329deg) brightness(121%) contrast(117%);
 }
 
 .navbar > button {
