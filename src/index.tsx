@@ -18,6 +18,7 @@ ReactDOM.render(
                     <Route index element={<CadastroAcomodacoes />} />
                 </Route>
             </Routes>
+
            
         </BrowserRouter>
     </React.StrictMode>,
