@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Acomodacao } from "../util/interfaces";
 
@@ -33,7 +34,9 @@ export default function ListagemAcomodacoes() {
     return (
         <section className={styles.cardsWrapper}>
             {acomodacoes.map((acomodacao) => (
-                <AcomodacaoCard key={acomodacao._id} acomodacao={acomodacao} />
+                <Link to={`/${acomodacao._id}`}>
+                    <AcomodacaoCard key={acomodacao._id} acomodacao={acomodacao} />
+                </Link>
             ))}
         </section>
     );
