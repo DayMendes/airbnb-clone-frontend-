@@ -10,8 +10,8 @@ export default function Footer() {
             <p>Esta aplicação foi desenvolvida em conjunto por:</p>
             <p className={styles.autores}>
                 <a href="https://github.com/arthurvergacas">Arthur Vergaças</a>,{" "}
-                <a href="https://github.com/roazambuja">Dayane Mendes</a> e{" "}
-                <a href="https://github.com/DayMendes">Roberta Azambuja</a>.
+                <a href="https://github.com/DayMendes">Dayane Mendes</a> e{" "}
+                <a href="https://github.com/roazambuja">Roberta Azambuja</a>.
             </p>
         </footer>
     );
