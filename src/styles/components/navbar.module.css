@@ -1,29 +1,53 @@
 .navbar {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
 
     position: relative;
 
+    height: fit-content;
+
     background: var(--gray);
     box-shadow: 0px 2px 10px 3px rgba(0, 0, 0, 0.1);
+
+    transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .navbar > img {
     width: 5rem;
     padding: 0.5rem;
+    margin-top: 0.7rem;
 }
 
 .navbar form {
     /* centralizando o input */
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    margin-left: auto;
+
+    height: fit-content;
 
     display: flex;
+
+    transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.navbar input {
+.userInput {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    padding: 1rem 0;
+}
+
+.userInput input {
+    margin: 0.2rem 0 0.8rem 0;
+}
+
+.navbar form > div > input {
     width: 30rem;
     height: 3rem;
 
@@ -41,23 +65,24 @@
     transition: all 0.3s;
 }
 
-.navbar input:hover {
-    box-shadow: 0px 2px 6px 2px rgba(255, 90, 95, 0.5);
-}
-
-.navbar input:focus {
+.navbar form > div > input:hover,
+.navbar form > div > input:focus {
     box-shadow: 0px 2px 6px 2px rgba(255, 90, 95, 0.5);
 }
 
 .navbar > form > button {
+    position: absolute;
     background: transparent;
     border: none;
+
+    right: 0;
+
+    margin-left: 1rem;
+    margin-top: 1.2rem;
 }
 
 .navbar > form > button > img {
-    width: 2rem;
-
-    margin-left: 0.5rem;
+    width: 3rem;
 
     cursor: pointer;
 
@@ -73,6 +98,8 @@
     /* colocando o botão de login na esquerda */
     margin-left: auto;
     margin-right: 1rem;
+
+    margin-top: 2rem;
 
     padding: 0.5rem;
 
