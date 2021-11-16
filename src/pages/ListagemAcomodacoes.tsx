@@ -29,11 +29,30 @@ export default function ListagemAcomodacoes() {
     }, []);
 
     return (
+<<<<<<< HEAD
         <>
             <h1>Acomodações</h1>
             {acomodacoes.map((acomodacao) => (
                 <AcomodacaoCard key={acomodacao._id} acomodacao={acomodacao} />
             ))}
         </>
+=======
+        <h1>
+            Acomodações
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            aaa
+        </h1>
+>>>>>>> ccdc0ea5789c2d02b050a1a849b11b833b6f0f3c
     );
 }
