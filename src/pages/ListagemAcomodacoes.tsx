@@ -48,8 +48,8 @@ export default function ListagemAcomodacoes() {
     return (
         <section className={styles.cardsWrapper}>
             {acomodacoes.map((acomodacao) => (
-                <Link to={`/${acomodacao._id}`}>
-                    <AcomodacaoCard key={acomodacao._id} acomodacao={acomodacao} />
+                <Link to={`/${acomodacao._id}`} key={acomodacao._id}>
+                    <AcomodacaoCard acomodacao={acomodacao} />
                 </Link>
             ))}
         </section>
