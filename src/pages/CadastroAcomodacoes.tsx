@@ -61,8 +61,8 @@ export default function CadastroAcomodacoes() {
 
         <label id="file">Escolha a imagem</label>
         <input
-          type="text"
-          id="imagem"
+          type="file"
+          id="file"
           value={acomodacoes.imagem}
           onChange={(event) =>
             setAcomodacoes({ ...acomodacoes, imagem: event.target.value })
