@@ -43,7 +43,7 @@ export default function ListagemAcomodacoes() {
             });
             setDeveBuscar(false);
         }
-    }, [deveBuscar]);
+    }, [deveBuscar, objetoBuscaFiltro, setDeveBuscar, stringBusca]);
 
     return (
         <section className={styles.cardsWrapper}>

@@ -8,7 +8,6 @@ import App from "./App";
 import DetalhesAcomodacao from "./pages/DetalhesAcomodacao";
 import ListagemAcomodacoes from "./pages/ListagemAcomodacoes";
 import PaginaNaoEncontrada from "./pages/PaginaNaoEncontrada";
-import TelaInicial from './pages/TelaInicial';
 
 ReactDOM.render(
     <React.StrictMode>
