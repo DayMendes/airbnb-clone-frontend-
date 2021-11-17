@@ -21,28 +21,7 @@ input {
   margin-bottom: 10px;
   font-size: 14px;
 }
-label#thumbnail {
-  margin-bottom: 20px;
-  border: 1px dashed #ddd;
-  background-size: cover;
-  cursor: pointer;
-  height: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-label#thumbnail input {
-  display: none;
-}
-
-label#thumbnail.has-thumbnail {
-  border: 0;
-}
-
-label#thumbnail.has-thumbnail img {
-  display: none;
-}
 fieldset {
   display: block;
   padding: 10px;
@@ -50,7 +29,7 @@ fieldset {
 }
 .grupo1 input,
 select {
-  width: 40%;
+  width: 70%;
   float: left;
   padding: 7px 10px;
   margin: 10px;
