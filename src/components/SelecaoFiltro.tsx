@@ -14,7 +14,16 @@ export default function SelecaoFiltro() {
             <button
                 type="button"
                 className={`${styles.activeButton} ${menuVisivel && styles.activeButtonOn}`}
-                onClick={() => setMenuVisivel(!menuVisivel)}
+                onClick={() => {
+                    setMenuVisivel(!menuVisivel);
+                    // resetar informações da busca, afinal, o usuário não as está vendo mais
+                    setObjetoBuscaFiltro({
+                        local: { cidade: "" },
+                        "check-in": "",
+                        "check-out": "",
+                        capacidade: "",
+                    });
+                }}
             >
                 ... ou faça uma busca personalizada!
                 <img src={settingsIcon} alt="Filtre sua busca." />

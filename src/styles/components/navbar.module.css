@@ -47,7 +47,31 @@
     margin: 0.2rem 0 0.8rem 0;
 }
 
-.navbar form > div > input {
+.navbar form > div {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.navbar form > div span {
+    position: absolute;
+    transform: scaleY(80%) scaleX(90%);
+    margin-top: 0.3rem;
+    margin-left: -2rem;
+
+    font-size: 2rem;
+    color: var(--text-highlight);
+
+    cursor: pointer;
+
+    transition: all 0.2s;
+}
+
+.navbar form > div span:hover {
+    color: var(--red);
+}
+
+.navbar form > div > div > input {
     width: 30rem;
     height: 3rem;
 
@@ -65,8 +89,8 @@
     transition: all 0.3s;
 }
 
-.navbar form > div > input:hover,
-.navbar form > div > input:focus {
+.navbar form > div > div > input:hover,
+.navbar form > div > div > input:focus {
     box-shadow: 0px 2px 6px 2px rgba(255, 90, 95, 0.5);
 }
 

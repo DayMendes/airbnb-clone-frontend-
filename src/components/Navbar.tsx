@@ -23,17 +23,32 @@ export default function Navbar() {
                 }}
             >
                 <div className={styles.userInput}>
-                    <input
-                        type="text"
-                        placeholder="Encontre o que você procura aqui!"
-                        value={stringBusca}
-                        onChange={(event) => {
-                            setStringBusca(event.target.value);
-                        }}
-                    />
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Encontre o que você procura aqui!"
+                            value={stringBusca}
+                            onChange={(event) => {
+                                setStringBusca(event.target.value);
+                            }}
+                        />
+                        {stringBusca && (
+                            <span
+                                onClick={() => {
+                                    // limpar string de busca
+                                    setStringBusca("");
+                                    // e buscar novamente
+                                    setDeveBuscar(true);
+                                }}
+                            >
+                                x
+                            </span>
+                        )}
+                    </div>
 
                     <SelecaoFiltro />
                 </div>
+
                 <button type="submit">
                     <img src={searchIcon} alt="Lupa de pesquisa" />
                 </button>
