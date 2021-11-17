@@ -21,13 +21,40 @@ input {
   margin-bottom: 10px;
   font-size: 14px;
 }
+label#thumbnail {
+  margin-bottom: 20px;
+  border: 1px dashed #ddd;
+  background-size: cover;
+  cursor: pointer;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+label#thumbnail input {
+  display: none;
+}
+
+label#thumbnail.has-thumbnail {
+  border: 0;
+}
+
+label#thumbnail.has-thumbnail img {
+  display: none;
+}
 fieldset {
+  display: block;
   padding: 10px;
   border: 0;
 }
-form > #categoria,
-#estados {
-  width: 100%;
+.grupo1 input,
+select {
+  width: 40%;
+  float: left;
+  padding: 7px 10px;
+  margin: 10px;
+  font-size: 14px;
 }
 
 form > input[type="number"] {
@@ -45,19 +72,12 @@ form > textarea {
   font-size: 14px;
   font-family: Georgia, "Times New Roman", serif;
 }
-form > select {
-  display: block;
-  margin-bottom: 15px;
-  width: 100%;
-  padding: 7px 10px;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
+
 .grupo2 {
-  display: flex;
+  display: inline-block;
   flex-direction: row;
-  justify-content: space-between;
-  width: 70%;
+  margin: 0 15px;
+  width: 40%;
 }
 
 .regras {
@@ -65,6 +85,7 @@ form > select {
   flex-direction: row;
   justify-content: space-between;
   width: 50%;
+  accent-color: #d24542;
 }
 
 label {

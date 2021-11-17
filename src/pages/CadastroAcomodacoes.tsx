@@ -1,31 +1,46 @@
-import React, {useState} from "react";
+import axios from "axios";
+import React, {useState,useMemo} from "react";
 import styles from "../styles/cadastroAcomodacoes.module.css";
+import camera from "../camera.svg";
+
 
 
 export default function CadastroAcomodacoes() {
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [categoria, setCategoria] = useState('');
+    const [imagem, setImagem] = useState('');
     const [preco, setPreco] = useState('');
-    const [local, setLocal] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [estado, setEstado] = useState('');
+    const [pais, setPais] = useState('');
+    const [cep, setCep] = useState('');
     const [numeroDePessoas, setNumeroDePessoas] = useState('');
-    const [comodidades, setComodidades] = useState('');
-    const [regras, setRegras] = useState('');
+    const [quartos, setQuartos] = useState('');
+    const [banheiros, setBanheiros] = useState('');
+    const [fumar, setFumar] = useState('');
+    const [animais, setAnimais] = useState('');
 
-    function handleSubmit(){
-        
+    const apiUrl = process.env.REACT_APP_API_URL;
 
-    }
+
+    async function cadAcomodacoes(e: any) {
+            e.preventDefault()
+    
+          const acomodacoes = {nome, descricao, categoria,imagem, preco, cidade, estado,pais,cep,numeroDePessoas, quartos,banheiros, fumar,animais};
+
+
+    
     return (
-        <>
-            <form className={styles.CadastroAcomodacoes}onSubmit={handleSubmit}>
-            <label htmlFor="nome">Dê um nome para sua acomodação</label>
-                    <input 
-                    type="text" 
-                    id="descnomericao" 
-                    placeholder="Lugar Tranquilo com área verde"
-                    value={nome}
-                    onChange={event => setNome(event.target.value)}
+     <>
+        <form className={styles.CadastroAcomodacoes}onSubmit={cadAcomodacoes}>
+        <label htmlFor="nome">Dê um nome para sua acomodação</label>
+        <input 
+        type="text" 
+        id="descnomericao" 
+        placeholder="Lugar Tranquilo com área verde"
+        value={nome}
+        onChange={event => setNome(event.target.value)}
                     />
 
                 <label htmlFor="descricao">Descrição</label>
@@ -51,50 +66,48 @@ export default function CadastroAcomodacoes() {
                     <option value="fazenda">Fazenda</option>
                     </select>
 
-                    <label id="thumbnail"></label>
-                    <input type="file" />
-                    <img src={''} alt="Selecionar imagem" />
+                    <label 
+                     id="imagem"
+                     >
+                     <img src={camera} alt="Enviar imagem" />
 
+                     <input type="file"
+                      name="categoria"
+                      value={imagem}
+                      onChange={event => setImagem(event.target.value)}/>
+                     
+                 </label>
+                    
                     <label htmlFor="preco">Preço</label>
                     <input 
-                    type="text"
+                    type="number"
                      id="preco" 
                      placeholder= "Valor cobrado por dia"
                      value={preco}
                     onChange={event => setPreco(event.target.value)}
                     />
                    
-                    <label htmlFor="Local">Endereço</label>
+                    <label htmlFor="Local">
+                    Onde fica a sua acomodação</label>
                     <fieldset className={styles.grupo1}>
-                    <input 
-                    type="text" 
-                    id="rua"
-                    placeholder="Rua"
-
-                    />
-                    <input 
-                    type="number" 
-                    id="numero"
-                    placeholder="Número"
-                    />
-
-                    <input 
-                    type="text" 
-                    id="complemento"
-                    placeholder="Complemento"
-                    />
-
+                   
                     <input 
                     type="text" 
                     id="cidade"
                     placeholder="Cidade"
+                    value={cidade}
+                    onChange={event => setCidade(event.target.value)}
+
                     />
                     
                     <select 
                     id="estados" 
                     name="estados"
+                    value={estado}
+                    onChange={event => setEstado(event.target.value)}
                     >
-
+                                    
+                    <option value="selecao">Selecione um estado</option>
                     <option value="acre">AC</option>
                     <option value="alagoas">AL</option>
                     <option value="amapa">AP</option>
@@ -128,12 +141,16 @@ export default function CadastroAcomodacoes() {
                     type="text" 
                     id="pais"
                     placeholder="País"
+                    value={pais}
+                    onChange={event => setPais(event.target.value)}
                     />
 
                     <input 
                     type="number" 
                     id="cep"
                     placeholder="CEP"
+                    value={cep}
+                    onChange={event => setCep(event.target.value)}
                     />
 
                     </fieldset>
@@ -144,7 +161,7 @@ export default function CadastroAcomodacoes() {
                     id="numeroDePessoas"
                     placeholder="Quantidade de Pessoas"
                     value={numeroDePessoas}
-                    onChange={event => setNumeroDePessoas(event.target.value)}
+                    onChange={e => setNumeroDePessoas(e.target.value)}
                     />
 
 
@@ -156,6 +173,8 @@ export default function CadastroAcomodacoes() {
                     type="number"
                     id="quartos"
                     placeholder="Quantidade de quartos"
+                    value={quartos}
+                    onChange={e => setQuartos(e.target.value)}
                      />
                     <label 
                     htmlFor="banheiros">Banheiros</label>
@@ -163,6 +182,8 @@ export default function CadastroAcomodacoes() {
                     type="number"
                     id="banheiros" 
                     placeholder="Quantidade de banheiros"
+                    value={banheiros}
+                    onChange={event => setBanheiros(event.target.value)}
                     />
                     </fieldset>
                     
@@ -172,12 +193,16 @@ export default function CadastroAcomodacoes() {
                     <input
                     type="checkbox"
                     id="fumar" 
+                    value={fumar}
+                    onChange={event => setFumar(event.target.value)}
                     />
                    
                     <label htmlFor="animais">Animais</label>
                     <input 
                     type="checkbox"
                     id="animais" 
+                    value={animais}
+                    onChange={event => setAnimais(event.target.value)}
                     /> 
                    
                    </fieldset>
@@ -185,4 +210,5 @@ export default function CadastroAcomodacoes() {
             </form>
         </>
     );
+    }
 }
