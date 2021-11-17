@@ -41,32 +41,32 @@ export default function DetalhesAcomodacao() {
   }, []);
 
   async function reservar() {
-      /*
-      let resposta = await axios
-      .post(`${apiUrl}/reservas/reservas`, {
-        //idLocador: 1,
-        idAcomodacao: id,
-        dataDeInicio: dataInicio,
-        dataDeTermino: dataTermino,
-      });
-
-      alert(resposta.status);
-      */
-
     axios
-      .post(`${apiUrl}/reservas/reservas`, {
-        idLocador: 1,
+      .post(`${apiUrl}/reservas/verificar`, {
         idAcomodacao: id,
         dataDeInicio: dataInicio,
         dataDeTermino: dataTermino,
       })
       .then((response) => {
-        alert('Reserva realizada com sucesso!');
+        if (response.status == 200) {
+          axios
+            .post(`${apiUrl}/reservas`, {
+              idLocador: 1,
+              idAcomodacao: id,
+              dataDeInicio: dataInicio,
+              dataDeTermino: dataTermino,
+            })
+            .then((response) => {
+              alert("Reserva realizada com sucesso!");
+            })
+            .catch((error) => {
+              alert("Ocorreu um erro ao realizar sua reserva!");
+            });
+        }
       })
       .catch((error) => {
-        alert("Ocorreu um erro ao realizar sua reserva!");
+        alert("A acomodação já está locada na data solicitada.");
       });
-
   }
 
   return (
@@ -97,22 +97,22 @@ export default function DetalhesAcomodacao() {
             <h1>{acomodacao.nome}</h1>
             <h2>{acomodacao.descricao}</h2>
             <div className={styles.datas}>
-              <div className={styles.dataArea}> 
+              <div className={styles.dataArea}>
                 <p>Data de início da locação:</p>
                 <DatePicker
-                    className={styles.datePicker}
-                    locale="pt-BR"
-                    selected={dataInicio}
-                    onChange={(date) => setDataInicio(date as Date)}
+                  className={styles.datePicker}
+                  locale="pt-BR"
+                  selected={dataInicio}
+                  onChange={(date) => setDataInicio(date as Date)}
                 />
               </div>
               <div className={styles.dataArea}>
                 <p>Data de término da locação:</p>
                 <DatePicker
-                    className={styles.datePicker}
-                    locale="pt-BR"
-                    selected={dataTermino}
-                    onChange={(date) => setDataTermino(date as Date)}
+                  className={styles.datePicker}
+                  locale="pt-BR"
+                  selected={dataTermino}
+                  onChange={(date) => setDataTermino(date as Date)}
                 />
               </div>
             </div>
