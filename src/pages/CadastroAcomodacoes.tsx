@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import styles from "../styles/cadastroAcomodacoes.module.css";
+import styles from "../styles/pages/cadastroAcomodacoes.module.css";
 import { Acomodacao } from "../util/interfaces";
 
 export default function CadastroAcomodacoes() {
@@ -19,7 +19,8 @@ export default function CadastroAcomodacoes() {
   }
   return (
     <>
-      <form className={styles.CadastroAcomodacoes} onSubmit={handleSubmit}>
+      <h2 className={styles.titleForm}> Cadastre sua acomodação</h2>
+      <form className={styles.cadastroAcomodacoes} onSubmit={handleSubmit}>
         <label htmlFor="nome">Dê um nome para sua acomodação</label>
         <input
           type="text"
