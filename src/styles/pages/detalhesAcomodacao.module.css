@@ -9,7 +9,7 @@
     margin: 2rem 0;
     padding: 1rem;
 
-    width: 70%;
+    width: 100%;
 
     border-radius: 10px;
 
@@ -19,11 +19,22 @@
     transition: all 0.2s;
 }
 
+@media (max-width: 720px) {
+    .container {
+        flex-direction: column;
+    }
+    .reservar {
+        margin-top: 20px;
+    }
+}
+
 .buttonReservar {
     color: #FFF;
     font-weight: bold;
     background-color: var(--red);
-    padding: 5px;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
     padding-left: 50px;
     padding-right: 50px;
     margin-top: 10px;
@@ -44,4 +55,34 @@
 .reservar {
     padding-left: 20px;
     flex: 0.8;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 { 
+    font-size: 1rem;
+    margin-bottom: 30px;
+    color: var(--text-highlight);
+}
+
+.datePicker {
+    padding: 10px;
+    border-radius: 8px;
+    border-width: 0.2px;
+    border-color: var(--red);
+    margin-bottom: 20px;
+    width: 99%;
+}
+
+
+.datas {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dataArea {
+    flex:1;
 }

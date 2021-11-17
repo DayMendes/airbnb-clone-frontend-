@@ -4,95 +4,129 @@ import { useParams, Outlet } from "react-router-dom";
 import { Acomodacao } from "../util/interfaces";
 
 import DatePicker from "react-datepicker";
-import { registerLocale } from  "react-datepicker";
-import pt from 'date-fns/locale/pt-BR';
+import { registerLocale } from "react-datepicker";
+import pt from "date-fns/locale/pt-BR";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 import styles from "../styles/pages/detalhesAcomodacao.module.css";
 
 export default function DetalhesAcomodacao() {
-    
-    registerLocale('pt-BR', pt);
+  registerLocale("pt-BR", pt);
 
-    const urlParams: { accommodationId: string | undefined } = useParams();
-    const [acomodacao, setAcomodacao] = useState<Acomodacao|null>();
-    const [dataInicio, setDataInicio] = useState<Date>(new Date());
-    const [dataTermino, setDataTermino] = useState<Date>(new Date());
-    let id = urlParams.accommodationId;
+  const urlParams: { accommodationId: string | undefined } = useParams();
+  const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
+  const [dataInicio, setDataInicio] = useState<Date>(new Date());
+  const [dataTermino, setDataTermino] = useState<Date>(new Date());
+  let id = urlParams.accommodationId;
 
-    const apiUrl = process.env.REACT_APP_API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
 
-    useEffect(() => {
-        async function getAcomodacoes() {
-            let response: AxiosResponse<Acomodacao>;
-            try {
-                response = await axios.get<Acomodacao>(`${apiUrl}/acomodacoes/${id}`);
-                return response;
-            } catch (err) {
-                setAcomodacao(null);
-            }
-        }
-
-        getAcomodacoes().then((acomodacao) => {
-            if (acomodacao) {
-                setAcomodacao(acomodacao.data);
-            }
-        });
-    }, []);
-
-    async function reservar(){
-        axios.post('http://localhost:4000/api/v1/reservas', {
-            idLocador: 1,
-            idAcomodacao: id,
-            dataDeInicio: dataInicio,
-            dataDeTermino: dataTermino
-          })
-          .then(function (response) {
-            alert(response);
-          })
-          .catch(function (error) {
-            alert(error);
-          });
+  useEffect(() => {
+    async function getAcomodacoes() {
+      let response: AxiosResponse<Acomodacao>;
+      try {
+        response = await axios.get<Acomodacao>(`${apiUrl}/acomodacoes/${id}`);
+        return response;
+      } catch (err) {
+        setAcomodacao(null);
+      }
     }
 
-    return (
-        <section className={styles.container}>
-            {acomodacao != null ? (
-                <>
-                    <div className={styles.informacoes}>
-                        <img className={styles.img} src={acomodacao.imagem} alt={acomodacao?.descricao} />
-                        <h1>Informações sobre o local: </h1>
-                        <p>Tipo de acomodação: {acomodacao.categoria}</p>
-                        <p>Até {acomodacao.numeroDePessoas} pessoas.</p>
-                        <p>Comodidades: {acomodacao.comodidades.banheiros} banheiro(s), {acomodacao.comodidades.cozinha} cozinha(s)</p>
-                        <p> Regras: {(acomodacao.regras.animais) ? "permitido" : "proibido"} animais, {(acomodacao.regras.fumar) ? "permitido" : "proibido"} fumar</p>
-                        <p>Valor: R$ {acomodacao.preco}</p>
-                    </div>
-                    <div className={styles.reservar}>
-                        <h1>{acomodacao.nome} - {acomodacao.descricao}</h1>
-                        <p>Data de início da locação:</p>
-                        <DatePicker
-                            locale="pt-BR"
-                            selected={dataInicio} 
-                            onChange={(date) => setDataInicio(date as Date)} 
-                        />
-                        <p>Data de término da locação:</p>
-                        <DatePicker
-                            locale="pt-BR"
-                            selected={dataTermino} 
-                            onChange={(date) => setDataTermino(date as Date)} 
-                        />
-                        <button onClick={reservar} className={styles.buttonReservar}>Realizar reserva</button>
-                    </div>
-                </>
-            ) : (
-                <h1>Ops! Algo de errado aconteceu.</h1>
-            )}
-        </section>
+    getAcomodacoes().then((acomodacao) => {
+      if (acomodacao) {
+        setAcomodacao(acomodacao.data);
+      }
+    });
+  }, []);
 
+  async function reservar() {
+      /*
+      let resposta = await axios
+      .post(`${apiUrl}/reservas/reservas`, {
+        //idLocador: 1,
+        idAcomodacao: id,
+        dataDeInicio: dataInicio,
+        dataDeTermino: dataTermino,
+      });
 
-    );
+      alert(resposta.status);
+      */
 
-    <Outlet />
+    axios
+      .post(`${apiUrl}/reservas/reservas`, {
+        idLocador: 1,
+        idAcomodacao: id,
+        dataDeInicio: dataInicio,
+        dataDeTermino: dataTermino,
+      })
+      .then((response) => {
+        alert('Reserva realizada com sucesso!');
+      })
+      .catch((error) => {
+        alert("Ocorreu um erro ao realizar sua reserva!");
+      });
+
+  }
+
+  return (
+    <section className={styles.container}>
+      {acomodacao != null ? (
+        <>
+          <div className={styles.informacoes}>
+            <img
+              className={styles.img}
+              src={acomodacao.imagem}
+              alt={acomodacao?.descricao}
+            />
+            <h1>Informações sobre o local: </h1>
+            <p>Tipo de acomodação: {acomodacao.categoria}</p>
+            <p>Até {acomodacao.numeroDePessoas} pessoas</p>
+            <p>
+              Comodidades: {acomodacao.comodidades.banheiros} banheiro(s),{" "}
+              {acomodacao.comodidades.cozinha} cozinha(s)
+            </p>
+            <p>
+              Regras: {acomodacao.regras.animais ? "permitido" : "proibido"}{" "}
+              animais, {acomodacao.regras.fumar ? "permitido" : "proibido"}{" "}
+              fumar
+            </p>
+            <p>Valor: R$ {acomodacao.preco}</p>
+          </div>
+          <div className={styles.reservar}>
+            <h1>{acomodacao.nome}</h1>
+            <h2>{acomodacao.descricao}</h2>
+            <div className={styles.datas}>
+              <div className={styles.dataArea}> 
+                <p>Data de início da locação:</p>
+                <DatePicker
+                    className={styles.datePicker}
+                    locale="pt-BR"
+                    selected={dataInicio}
+                    onChange={(date) => setDataInicio(date as Date)}
+                />
+              </div>
+              <div className={styles.dataArea}>
+                <p>Data de término da locação:</p>
+                <DatePicker
+                    className={styles.datePicker}
+                    locale="pt-BR"
+                    selected={dataTermino}
+                    onChange={(date) => setDataTermino(date as Date)}
+                />
+              </div>
+            </div>
+
+            <button onClick={reservar} className={styles.buttonReservar}>
+              Realizar reserva
+            </button>
+          </div>
+        </>
+      ) : (
+        <h1>Ops! Algo de errado aconteceu.</h1>
+      )}
+    </section>
+  );
+
+  <Outlet />;
 }
