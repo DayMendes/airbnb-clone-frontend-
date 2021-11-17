@@ -1,145 +1,146 @@
 .navbar {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 
-    position: relative;
+  position: relative;
 
-    height: fit-content;
+  height: fit-content;
 
-    background: var(--gray);
-    box-shadow: 0px 2px 10px 3px rgba(0, 0, 0, 0.1);
+  background: var(--gray);
+  box-shadow: 0px 2px 10px 3px rgba(0, 0, 0, 0.1);
 
-    transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .navbar > a > img {
-    width: 5rem;
-    padding: 0.5rem;
-    margin-top: 0.7rem;
+  width: 5rem;
+  padding: 0.5rem;
+  margin-top: 0.7rem;
 }
 
 .navbar form {
-    /* centralizando o input */
-    position: relative;
-    margin-left: auto;
+  /* centralizando o input */
+  position: relative;
+  margin-left: auto;
 
-    height: fit-content;
+  height: fit-content;
 
-    display: flex;
+  display: flex;
 
-    transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .userInput {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 
-    position: relative;
+  position: relative;
 
-    padding: 1rem 0;
+  padding: 1rem 0;
 }
 
 .userInput input {
-    margin: 0.2rem 0 0.8rem 0;
+  margin: 0.2rem 0 0.8rem 0;
 }
 
 .navbar form > div {
-    display: flex;
-    position: relative;
-    align-items: center;
+  display: flex;
+  position: relative;
+  align-items: center;
 }
 
 .navbar form > div span {
-    position: absolute;
-    transform: scaleY(80%) scaleX(90%);
-    margin-top: 0.3rem;
-    margin-left: -2rem;
+  position: absolute;
+  transform: scaleY(80%) scaleX(90%);
+  margin-top: 0.3rem;
+  margin-left: -2rem;
 
-    font-size: 2rem;
-    color: var(--text-highlight);
+  font-size: 2rem;
+  color: var(--text-highlight);
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .navbar form > div span:hover {
-    color: var(--red);
+  color: var(--red);
 }
 
 .navbar form > div > div > input {
-    width: 30rem;
-    height: 3rem;
+  width: 30rem;
+  height: 3rem;
 
-    padding: 0.5rem;
+  padding: 0.5rem;
 
-    border-radius: 5px;
-    border: none;
+  border-radius: 5px;
+  border: none;
 
-    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.2);
 
-    color: var(--text);
-    text-align: center;
-    font-size: 1.2rem;
+  color: var(--text);
+  text-align: center;
+  font-size: 1.2rem;
 
-    transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .navbar form > div > div > input:hover,
 .navbar form > div > div > input:focus {
-    box-shadow: 0px 2px 6px 2px rgba(255, 90, 95, 0.5);
+  box-shadow: 0px 2px 6px 2px rgba(255, 90, 95, 0.5);
 }
 
 .navbar > form > button {
-    position: absolute;
-    background: transparent;
-    border: none;
+  position: absolute;
+  background: transparent;
+  border: none;
 
-    right: 0;
+  right: 0;
 
-    margin-left: 1rem;
-    margin-top: 1.2rem;
+  margin-left: 1rem;
+  margin-top: 1.2rem;
 }
 
 .navbar > form > button > img {
-    width: 3rem;
+  width: 3rem;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: all 0.15s;
+  transition: all 0.15s;
 }
 
 .navbar > form > button > img:hover {
-    /* equivalent to color: var(--red) in svgs*/
-    filter: invert(39%) sepia(75%) saturate(1578%) hue-rotate(329deg) brightness(121%) contrast(117%);
+  /* equivalent to color: var(--red) in svgs*/
+  filter: invert(39%) sepia(75%) saturate(1578%) hue-rotate(329deg)
+    brightness(121%) contrast(117%);
 }
 
 .navbar > button {
-    /* colocando o botão de login na esquerda */
-    margin-left: auto;
-    margin-right: 1rem;
+  /* colocando o botão de login na esquerda */
+  margin-left: auto;
+  margin-right: 1rem;
 
-    margin-top: 2rem;
+  margin-top: 2rem;
 
-    padding: 0.5rem;
+  padding: 0.5rem;
 
-    border: none;
-    border-radius: 10px;
+  border: none;
+  border-radius: 10px;
 
-    background: var(--red);
-    color: var(--gray);
+  background: var(--red);
+  color: var(--gray);
 
-    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.2);
 
-    font-size: 1.1rem;
+  font-size: 1.1rem;
 
-    transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .navbar > button:hover {
-    background: #ff333a;
+  background: #ff333a;
 }

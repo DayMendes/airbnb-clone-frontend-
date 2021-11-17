@@ -248,7 +248,7 @@ export default function CadastroAcomodacoes() {
             type="number"
             id="banheiros"
             placeholder="Quantidade de banheiros"
-            value={acomodacoes.comodidades.quartos}
+            value={acomodacoes.comodidades.banheiros}
             onChange={(event) =>
               setAcomodacoes({
                 ...acomodacoes,
