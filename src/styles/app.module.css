@@ -1,0 +1,11 @@
+.pageContainer {
+    position: relative;
+    min-height: 100vh;
+}
+
+.contentWrapper {
+    padding-bottom: 7.5rem; /* Footer height */
+
+    /* To fit nicely into the page */
+    margin: 0 2rem;
+}

@@ -38,7 +38,7 @@ body {
   background-color: var(--background);
   color: var(--text);
 
-  height: fit-content;
+  min-height: fit-content;
 }
 
 body,
@@ -56,6 +56,17 @@ a {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 /* accessibilty outline thingies -> cool resource at: https://medium.com/hackernoon/removing-that-ugly-focus-ring-and-keeping-it-too-6c8727fefcd2*/
