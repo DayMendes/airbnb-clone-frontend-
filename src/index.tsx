@@ -8,21 +8,22 @@ import App from "./App";
 import DetalhesAcomodacao from "./pages/DetalhesAcomodacao";
 import ListagemAcomodacoes from "./pages/ListagemAcomodacoes";
 import PaginaNaoEncontrada from "./pages/PaginaNaoEncontrada";
-import TelaInicial from './pages/TelaInicial';
+import CadastroAcomodacoes from "./pages/CadastroAcomodacoes";
 
 ReactDOM.render(
-    <React.StrictMode>
-        <AppContextProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<App />}>
-                        <Route index element={<ListagemAcomodacoes />} />
-                        <Route path="/:accommodationId" element={<DetalhesAcomodacao />} />
-                        <Route path="*" element={<PaginaNaoEncontrada />} />
-                    </Route>
-                </Routes>
-            </BrowserRouter>
-        </AppContextProvider>
-    </React.StrictMode>,
-    document.getElementById("root")
+  <React.StrictMode>
+    <AppContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<ListagemAcomodacoes />} />
+            <Route path="/:accommodationId" element={<DetalhesAcomodacao />} />
+            <Route path="/acomodacoes" element={<CadastroAcomodacoes />} />
+            <Route path="*" element={<PaginaNaoEncontrada />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AppContextProvider>
+  </React.StrictMode>,
+  document.getElementById("root"),
 );

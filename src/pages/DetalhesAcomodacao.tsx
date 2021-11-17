@@ -84,7 +84,7 @@ export default function DetalhesAcomodacao() {
             <p>Até {acomodacao.numeroDePessoas} pessoas</p>
             <p>
               Comodidades: {acomodacao.comodidades.banheiros} banheiro(s),{" "}
-              {acomodacao.comodidades.cozinha} cozinha(s)
+              {acomodacao.comodidades.quartos} quarto(s)
             </p>
             <p>
               Regras: {acomodacao.regras.animais ? "permitido" : "proibido"}{" "}

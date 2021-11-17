@@ -1,51 +1,21 @@
 import axios from "axios";
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import styles from "../styles/cadastroAcomodacoes.module.css";
-import camera from "../camera.svg";
+import { Acomodacao } from "../util/interfaces";
 
 export default function CadastroAcomodacoes() {
-  const [nome, setNome] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [categoria, setCategoria] = useState("");
-  const [imagem, setImagem] = useState("");
-  const [preco, setPreco] = useState("");
-  const [rua, setRua] = useState("");
-  const [numero, setNumero] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [estado, setEstado] = useState("");
-  const [pais, setPais] = useState("");
-  const [cep, setCep] = useState("");
-  const [numeroDePessoas, setNumeroDePessoas] = useState("");
-  const [quartos, setQuartos] = useState("");
-  const [banheiros, setBanheiros] = useState("");
-  const [fumar, setFumar] = useState("");
-  const [animais, setAnimais] = useState("");
-
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const [acomodacoes, setAcomodacoes] = useState<Acomodacao>({
+    local: {} as Acomodacao["local"],
+    comodidades: {} as Acomodacao["comodidades"],
+    regras: {} as Acomodacao["regras"],
+  } as Acomodacao);
 
   async function handleSubmit(event: any) {
     event.preventDefault();
-
-    const acomodacoes = {
-      nome,
-      descricao,
-      categoria,
-      imagem,
-      preco,
-      rua,
-      numero,
-      complemento,
-      cidade,
-      estado,
-      pais,
-      cep,
-      numeroDePessoas,
-      quartos,
-      banheiros,
-      fumar,
-      animais,
-    };
+    const apiUrl = process.env.REACT_APP_API_URL;
+    axios.post(`${apiUrl}/acomodacoes/criar`, acomodacoes).catch((err) => {
+      alert(err);
+    });
   }
   return (
     <>
@@ -55,24 +25,30 @@ export default function CadastroAcomodacoes() {
           type="text"
           id="descnomericao"
           placeholder="Lugar Tranquilo com área verde"
-          value={nome}
-          onChange={(event) => setNome(event.target.value)}
+          value={acomodacoes.nome}
+          onChange={(event) =>
+            setAcomodacoes({ ...acomodacoes, nome: event.target.value })
+          }
         />
 
         <label htmlFor="descricao">Descrição</label>
         <textarea
           id="descricao"
           placeholder="Descreva o que o seu espaço tem a oferecer, por ex: Piscina, churrasqueira, wifi..."
-          value={descricao}
-          onChange={(event) => setDescricao(event.target.value)}
+          value={acomodacoes.descricao}
+          onChange={(event) =>
+            setAcomodacoes({ ...acomodacoes, descricao: event.target.value })
+          }
         />
 
         <label htmlFor="categoria">Tipo de acomodação</label>
         <select
           id="categoria"
           name="categoria"
-          value={categoria}
-          onChange={(event) => setCategoria(event.target.value)}
+          value={acomodacoes.categoria}
+          onChange={(event) =>
+            setAcomodacoes({ ...acomodacoes, categoria: event.target.value })
+          }
         >
           <option value="selecao">Selecione</option>
           <option value="apartamento">Apartamento</option>
@@ -84,10 +60,12 @@ export default function CadastroAcomodacoes() {
 
         <label id="file">Escolha a imagem</label>
         <input
-          type="file"
-          id="file"
-          value={imagem}
-          onChange={(event) => setImagem(event.target.value)}
+          type="text"
+          id="imagem"
+          value={acomodacoes.imagem}
+          onChange={(event) =>
+            setAcomodacoes({ ...acomodacoes, imagem: event.target.value })
+          }
         />
 
         <label htmlFor="preco">Preço</label>
@@ -95,48 +73,84 @@ export default function CadastroAcomodacoes() {
           type="number"
           id="preco"
           placeholder="Valor cobrado por dia"
-          value={preco}
-          onChange={(event) => setPreco(event.target.value)}
+          value={acomodacoes.preco}
+          onChange={(event) =>
+            setAcomodacoes({
+              ...acomodacoes,
+              preco: Number.parseFloat(event.target.value),
+            })
+          }
         />
 
         <label htmlFor="Local">Onde fica a sua acomodação</label>
         <fieldset className={styles.grupo1}>
           <input
             type="text"
-            id="cidade"
+            id="rua"
             placeholder="Rua"
-            value={rua}
-            onChange={(event) => setRua(event.target.value)}
+            value={acomodacoes.local.rua}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                local: { ...acomodacoes.local, rua: event.target.value },
+              })
+            }
           />
           <input
             type="number"
             id="numero"
             placeholder="Nº"
-            value={numero}
-            onChange={(event) => setNumero(event.target.value)}
+            value={acomodacoes.local.numero}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                local: {
+                  ...acomodacoes.local,
+                  numero: Number.parseFloat(event.target.value),
+                },
+              })
+            }
           />
 
           <input
             type="text"
             id="complemento"
             placeholder="Complemento"
-            value={complemento}
-            onChange={(event) => setComplemento(event.target.value)}
+            value={acomodacoes.local.complemento}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                local: {
+                  ...acomodacoes.local,
+                  complemento: event.target.value,
+                },
+              })
+            }
           />
 
           <input
             type="text"
             id="cidade"
             placeholder="Cidade"
-            value={cidade}
-            onChange={(event) => setCidade(event.target.value)}
+            value={acomodacoes.local.cidade}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                local: { ...acomodacoes.local, cidade: event.target.value },
+              })
+            }
           />
 
           <select
             id="estados"
             name="estados"
-            value={estado}
-            onChange={(event) => setEstado(event.target.value)}
+            value={acomodacoes.local.estado}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                local: { ...acomodacoes.local, estado: event.target.value },
+              })
+            }
           >
             <option value="selecao">Selecione um estado</option>
             <option value="acre">AC</option>
@@ -172,16 +186,29 @@ export default function CadastroAcomodacoes() {
             type="text"
             id="pais"
             placeholder="País"
-            value={pais}
-            onChange={(event) => setPais(event.target.value)}
+            value={acomodacoes.local.pais}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                local: { ...acomodacoes.local, pais: event.target.value },
+              })
+            }
           />
 
           <input
             type="number"
             id="cep"
             placeholder="CEP"
-            value={cep}
-            onChange={(event) => setCep(event.target.value)}
+            value={acomodacoes.local.cep}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                local: {
+                  ...acomodacoes.local,
+                  cep: Number.parseFloat(event.target.value),
+                },
+              })
+            }
           />
         </fieldset>
         <label htmlFor="numeroDePessoas">Numero De Pessoas</label>
@@ -189,8 +216,13 @@ export default function CadastroAcomodacoes() {
           type="number"
           id="numeroDePessoas"
           placeholder="Quantidade de Pessoas"
-          value={numeroDePessoas}
-          onChange={(e) => setNumeroDePessoas(e.target.value)}
+          value={acomodacoes.numeroDePessoas}
+          onChange={(event) =>
+            setAcomodacoes({
+              ...acomodacoes,
+              numeroDePessoas: Number.parseFloat(event.target.value),
+            })
+          }
         />
 
         <label htmlFor="comodidades">Comodidades</label>
@@ -200,16 +232,32 @@ export default function CadastroAcomodacoes() {
             type="number"
             id="quartos"
             placeholder="Quantidade de quartos"
-            value={quartos}
-            onChange={(e) => setQuartos(e.target.value)}
+            value={acomodacoes.comodidades.quartos}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                comodidades: {
+                  ...acomodacoes.comodidades,
+                  quartos: Number.parseFloat(event.target.value),
+                },
+              })
+            }
           />
           <label htmlFor="banheiros">Banheiros</label>
           <input
             type="number"
             id="banheiros"
             placeholder="Quantidade de banheiros"
-            value={banheiros}
-            onChange={(event) => setBanheiros(event.target.value)}
+            value={acomodacoes.comodidades.quartos}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                comodidades: {
+                  ...acomodacoes.comodidades,
+                  banheiros: Number.parseFloat(event.target.value),
+                },
+              })
+            }
           />
         </fieldset>
 
@@ -219,16 +267,29 @@ export default function CadastroAcomodacoes() {
           <input
             type="checkbox"
             id="fumar"
-            value={fumar}
-            onChange={(event) => setFumar(event.target.value)}
+            value={acomodacoes.regras.fumar as unknown as number}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                regras: { ...acomodacoes.regras, fumar: !!event.target.value },
+              })
+            }
           />
 
           <label htmlFor="animais">Animais</label>
           <input
             type="checkbox"
             id="animais"
-            value={animais}
-            onChange={(event) => setAnimais(event.target.value)}
+            value={acomodacoes.regras.animais as unknown as number}
+            onChange={(event) =>
+              setAcomodacoes({
+                ...acomodacoes,
+                regras: {
+                  ...acomodacoes.regras,
+                  animais: !!event.target.value,
+                },
+              })
+            }
           />
         </fieldset>
         <button type="submit">Cadastrar</button>
