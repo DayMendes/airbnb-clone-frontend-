@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Outlet } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Acomodacao } from "../util/interfaces";
 
 import DatePicker from "react-datepicker";
@@ -18,11 +18,11 @@ export default function DetalhesAcomodacao() {
   const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
   const [dataInicio, setDataInicio] = useState<Date>(new Date());
   const [dataTermino, setDataTermino] = useState<Date>(new Date());
-  let id = urlParams.accommodationId;
-
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
+    let id = urlParams.accommodationId;
+    const apiUrl = process.env.REACT_APP_API_URL;
+
     async function getAcomodacoes() {
       let response: AxiosResponse<Acomodacao>;
       try {
@@ -38,9 +38,11 @@ export default function DetalhesAcomodacao() {
         setAcomodacao(acomodacao.data);
       }
     });
-  }, []);
+  }, [urlParams]);
 
   async function reservar() {
+    let id = urlParams.accommodationId;
+    const apiUrl = process.env.REACT_APP_API_URL;
     axios
       .post(`${apiUrl}/reservas/verificar`, {
         idAcomodacao: id,
@@ -48,7 +50,7 @@ export default function DetalhesAcomodacao() {
         dataDeTermino: dataTermino,
       })
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           axios
             .post(`${apiUrl}/reservas`, {
               idLocador: 1,
@@ -127,6 +129,4 @@ export default function DetalhesAcomodacao() {
       )}
     </section>
   );
-
-  <Outlet />;
 }
