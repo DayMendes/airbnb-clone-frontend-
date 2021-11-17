@@ -2,33 +2,33 @@ import logo from "../images/logo-512.png";
 import searchIcon from "../images/magnifying-glass.png";
 import styles from "../styles/components/navbar.module.css";
 
+import { Link } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { useContext } from "react";
-import { useSearchParams } from "react-router-dom";
 
 import SelecaoFiltro from "./SelecaoFiltro";
 
 export default function Navbar() {
-    const { setStringBusca } = useContext(AppContext);
-    const [buscaUsuario, setBuscaUsuario] = useSearchParams("");
+    const { stringBusca, setStringBusca, setDeveBuscar } = useContext(AppContext);
 
     return (
         <nav className={styles.navbar}>
-            <img src={logo} alt="Logo Airbnb" />
+            <Link to="/">
+                <img src={logo} alt="Logo Airbnb" />
+            </Link>
             <form
                 onSubmit={(event) => {
                     event.preventDefault();
-                    setStringBusca(buscaUsuario.get("general") || "");
+                    setDeveBuscar(true);
                 }}
             >
                 <div className={styles.userInput}>
                     <input
                         type="text"
                         placeholder="Encontre o que você procura aqui!"
-                        value={buscaUsuario.get("general") || ""}
+                        value={stringBusca}
                         onChange={(event) => {
-                            if (event.target.value) setBuscaUsuario({ general: event.target.value });
-                            else setBuscaUsuario({});
+                            setStringBusca(event.target.value);
                         }}
                     />
 

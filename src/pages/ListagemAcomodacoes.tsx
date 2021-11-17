@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import qs from "qs";
 import { Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { Acomodacao } from "../util/interfaces";
@@ -9,30 +10,40 @@ import AcomodacaoCard from "../components/AcomodacaoCard";
 import styles from "../styles/pages/listagemAcomodacoes.module.css";
 
 export default function ListagemAcomodacoes() {
-    const { stringBusca } = useContext(AppContext);
+    const { stringBusca, objetoBuscaFiltro, deveBuscar, setDeveBuscar } = useContext(AppContext);
 
     const [acomodacoes, setAcomodacoes] = useState<Acomodacao[] | []>([]);
 
-    const apiUrl = process.env.REACT_APP_API_URL;
-
     useEffect(() => {
-        async function getAcomodacoes(generalParameter = "") {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        async function getAcomodacoes() {
             let response: AxiosResponse<Acomodacao[]>;
             try {
-                const queryParams = `?general=${generalParameter}`;
-                response = await axios.get<Acomodacao[]>(`${apiUrl}/acomodacoes${queryParams}`);
+                // construir query string
+                const queryParams = { general: stringBusca };
+                for (const key in objetoBuscaFiltro) {
+                    if ((objetoBuscaFiltro as any)[key]) {
+                        (queryParams as any)[key] = (objetoBuscaFiltro as any)[key];
+                    }
+                }
+
+                const queryString = qs.stringify(queryParams);
+                response = await axios.get<Acomodacao[]>(`${apiUrl}/acomodacoes?${queryString}`);
                 return response;
             } catch (err) {
                 setAcomodacoes([]);
             }
         }
 
-        getAcomodacoes(stringBusca).then((acomodacoes) => {
-            if (acomodacoes) {
-                setAcomodacoes(acomodacoes.data);
-            }
-        });
-    }, [stringBusca]);
+        if (deveBuscar) {
+            getAcomodacoes().then((acomodacoes) => {
+                if (acomodacoes) {
+                    setAcomodacoes(acomodacoes.data);
+                }
+            });
+            setDeveBuscar(false);
+        }
+    }, [deveBuscar]);
 
     return (
         <section className={styles.cardsWrapper}>
