@@ -100,21 +100,32 @@ export default function DetalhesAcomodacao() {
             <h2>{acomodacao.descricao}</h2>
             <div className={styles.datas}>
               <div className={styles.dataArea}>
-                <p>Data de início da locação:</p>
-                <DatePicker
+                <p>
+                  <label htmlFor="check-in">Data de início da locação:</label>
+                </p>
+                <input
                   className={styles.datePicker}
-                  locale="pt-BR"
-                  selected={dataInicio}
-                  onChange={(date) => setDataInicio(date as Date)}
+                  type="date"
+                  id="check-in"
+                  name="check-in"
+                  onChange={(event) =>
+                    setDataInicio(new Date(event.target.value))
+                  }
+                  placeholder="Check In"
                 />
               </div>
               <div className={styles.dataArea}>
-                <p>Data de término da locação:</p>
-                <DatePicker
+                <p>
+                  <label htmlFor="check-in">Data de término da locação:</label>
+                </p>
+
+                <input
                   className={styles.datePicker}
-                  locale="pt-BR"
-                  selected={dataTermino}
-                  onChange={(date) => setDataTermino(date as Date)}
+                  type="date"
+                  id="check-out"
+                  name="check-out"
+                  onChange={ (event) => setDataTermino(new Date(event.target.value)) }
+                  placeholder="Check Out"
                 />
               </div>
             </div>
