@@ -26,6 +26,8 @@
 
 .acomodacaoCard h2 {
     color: var(--orange);
+    font-size: 2rem;
+    margin-bottom: 0.2rem;
 }
 
 .acomodacaoCard h3 {

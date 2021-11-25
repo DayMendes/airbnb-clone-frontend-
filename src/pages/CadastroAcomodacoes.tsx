@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "../styles/pages/cadastroAcomodacoes.module.css";
 import { Acomodacao } from "../util/interfaces";
 
@@ -27,9 +27,7 @@ export default function CadastroAcomodacoes() {
           id="descnomericao"
           placeholder="Lugar Tranquilo com área verde"
           value={acomodacoes.nome}
-          onChange={(event) =>
-            setAcomodacoes({ ...acomodacoes, nome: event.target.value })
-          }
+          onChange={(event) => setAcomodacoes({ ...acomodacoes, nome: event.target.value })}
         />
 
         <label htmlFor="descricao">Descrição</label>
@@ -37,9 +35,7 @@ export default function CadastroAcomodacoes() {
           id="descricao"
           placeholder="Descreva o que o seu espaço tem a oferecer, por ex: Piscina, churrasqueira, wifi..."
           value={acomodacoes.descricao}
-          onChange={(event) =>
-            setAcomodacoes({ ...acomodacoes, descricao: event.target.value })
-          }
+          onChange={(event) => setAcomodacoes({ ...acomodacoes, descricao: event.target.value })}
         />
 
         <label htmlFor="categoria">Tipo de acomodação</label>
@@ -47,9 +43,7 @@ export default function CadastroAcomodacoes() {
           id="categoria"
           name="categoria"
           value={acomodacoes.categoria}
-          onChange={(event) =>
-            setAcomodacoes({ ...acomodacoes, categoria: event.target.value })
-          }
+          onChange={(event) => setAcomodacoes({ ...acomodacoes, categoria: event.target.value })}
         >
           <option value="selecao">Selecione</option>
           <option value="apartamento">Apartamento</option>
@@ -64,9 +58,7 @@ export default function CadastroAcomodacoes() {
           type="file"
           id="file"
           value={acomodacoes.imagem}
-          onChange={(event) =>
-            setAcomodacoes({ ...acomodacoes, imagem: event.target.value })
-          }
+          onChange={(event) => setAcomodacoes({ ...acomodacoes, imagem: event.target.value })}
         />
 
         <label htmlFor="preco">Preço</label>
