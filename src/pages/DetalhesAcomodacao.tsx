@@ -88,22 +88,16 @@ export default function DetalhesAcomodacao() {
       {acomodacao != null ? (
         <>
           <div className={styles.informacoes}>
-            <img
-              className={styles.img}
-              src={acomodacao.imagem}
-              alt={acomodacao?.descricao}
-            />
+            <img className={styles.img} src={acomodacao.imagem} alt={acomodacao?.descricao} />
             <h1>Informações sobre o local: </h1>
             <p>Tipo de acomodação: {acomodacao.categoria}</p>
             <p>Até {acomodacao.numeroDePessoas} pessoas</p>
             <p>
-              Comodidades: {acomodacao.comodidades.banheiros} banheiro(s),{" "}
-              {acomodacao.comodidades.quartos} quarto(s)
+              Comodidades: {acomodacao.comodidades.banheiros} banheiro(s), {acomodacao.comodidades.quartos} quarto(s)
             </p>
             <p>
-              Regras: {acomodacao.regras.animais ? "permitido" : "proibido"}{" "}
-              animais, {acomodacao.regras.fumar ? "permitido" : "proibido"}{" "}
-              fumar
+              Regras: {acomodacao.regras.animais ? "permitido" : "proibido"} animais,{" "}
+              {acomodacao.regras.fumar ? "permitido" : "proibido"} fumar
             </p>
             <p>Valor: R$ {acomodacao.preco}</p>
           </div>
