@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styles from "../styles/pages/cadastro.module.css";
 
