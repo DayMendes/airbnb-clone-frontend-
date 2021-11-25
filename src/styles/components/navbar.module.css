@@ -115,8 +115,7 @@
 
 .navbar > form > button > img:hover {
   /* equivalent to color: var(--red) in svgs*/
-  filter: invert(39%) sepia(75%) saturate(1578%) hue-rotate(329deg)
-    brightness(121%) contrast(117%);
+  filter: invert(39%) sepia(75%) saturate(1578%) hue-rotate(329deg) brightness(121%) contrast(117%);
 }
 
 .navbar > a:last-child {

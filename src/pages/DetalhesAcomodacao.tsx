@@ -15,14 +15,14 @@ import { AppContext } from "../AppContext";
 export default function DetalhesAcomodacao() {
   registerLocale("pt-BR", pt);
 
-  const { setMostarCaixaDeBusca } = useContext(AppContext);
+  const { setMostrarCaixaDeBusca } = useContext(AppContext);
 
   const urlParams: { accommodationId: string | undefined } = useParams();
   const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
   const [dataInicio, setDataInicio] = useState<Date>(new Date());
   const [dataTermino, setDataTermino] = useState<Date>(new Date());
 
-  useEffect(() => setMostarCaixaDeBusca(false), []); // garantir que a caixa de busca não será mostrada
+  useEffect(() => setMostrarCaixaDeBusca(false), [setMostrarCaixaDeBusca]); // garantir que a caixa de busca não será mostrada
 
   useEffect(() => {
     let id = urlParams.accommodationId;

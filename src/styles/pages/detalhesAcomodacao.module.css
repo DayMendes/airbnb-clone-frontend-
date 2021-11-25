@@ -57,11 +57,11 @@
     flex: 0.8;
 }
 
-h1 {
+.container h1 {
     font-size: 2rem;
 }
 
-h2 { 
+.container h2 { 
     font-size: 1rem;
     margin-bottom: 30px;
     color: var(--text-highlight);

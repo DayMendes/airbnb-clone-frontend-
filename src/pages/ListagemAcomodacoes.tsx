@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import qs from "qs";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { Acomodacao } from "../util/interfaces";
 import { AppContext } from "../AppContext";
@@ -10,11 +10,11 @@ import AcomodacaoCard from "../components/AcomodacaoCard";
 import styles from "../styles/pages/listagemAcomodacoes.module.css";
 
 export default function ListagemAcomodacoes() {
-  const { stringBusca, objetoBuscaFiltro, deveBuscar, setDeveBuscar, setMostarCaixaDeBusca } = useContext(AppContext);
+  const { stringBusca, objetoBuscaFiltro, deveBuscar, setDeveBuscar, setMostrarCaixaDeBusca } = useContext(AppContext);
   const [primeiroRender, setPrimeiroRender] = useState(true); // para pesquisar quando a pagina é carregada
   const [acomodacoes, setAcomodacoes] = useState<Acomodacao[] | []>([]);
 
-  useEffect(() => setMostarCaixaDeBusca(true), []); // garantir que a caixa de busca será mostrada
+  useEffect(() => setMostrarCaixaDeBusca(true), [setMostrarCaixaDeBusca]); // garantir que a caixa de busca será mostrada
 
   useEffect(() => {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -46,7 +46,7 @@ export default function ListagemAcomodacoes() {
       setDeveBuscar(false);
       setPrimeiroRender(false);
     }
-  }, [deveBuscar, objetoBuscaFiltro, setDeveBuscar, stringBusca]);
+  }, [deveBuscar, objetoBuscaFiltro, setDeveBuscar, stringBusca, primeiroRender]);
 
   return (
     <section className={styles.cardsWrapper}>
