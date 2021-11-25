@@ -12,6 +12,8 @@ export default function DetalhesAcomodacao() {
   const [dataInicio, setDataInicio] = useState<Date|null>(null);
   const [dataTermino, setDataTermino] = useState<Date|null>(null);
 
+  const [textoReserva, setTextoReserva] = useState<String>('')
+
   useEffect(() => {
     let id = urlParams.accommodationId;
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -44,7 +46,8 @@ export default function DetalhesAcomodacao() {
       })
       .then((response) => {
         if (response.status === 200) {
-          alert('reserva ok')
+          setTextoReserva('O apartamento está disponível no período de seu interesse!');
+          //alert('reserva ok')
           {/* 
           axios
             .post(`${apiUrl}/reservas`, {
@@ -64,11 +67,11 @@ export default function DetalhesAcomodacao() {
       })
       .catch((error) => {
         if (error.response.status === 400) {
-          alert('Ops! Preencha todos os campos para verificarmos a disponibilidade do imóvel.');
-        } else if (error.response.status === 500) {
-          alert(error.response.data);
+          setTextoReserva('Ops! Preencha todos os campos para verificarmos a disponibilidade do imóvel.');
+        } else if (error.response.status === 502) {
+          setTextoReserva(error.response.data);
         } else {
-          alert('Ocorreu algum erro durante a validação. Tente novamente!');
+          setTextoReserva('Ocorreu algum erro durante a validação. Tente novamente!');
         } 
       });
   }
@@ -103,7 +106,7 @@ export default function DetalhesAcomodacao() {
             <div className={styles.datas}>
               <div className={styles.dataArea}>
                 <p>
-                  <label htmlFor="check-in">Data de início da locação:</label>
+                  <label htmlFor="check-in">Data de check-in:</label>
                 </p>
                 <input
                   className={styles.datePicker}
@@ -116,7 +119,7 @@ export default function DetalhesAcomodacao() {
               </div>
               <div className={styles.dataArea}>
                 <p>
-                  <label htmlFor="check-in">Data de término da locação:</label>
+                  <label htmlFor="check-in">Data de check-out:</label>
                 </p>
 
                 <input
@@ -131,8 +134,13 @@ export default function DetalhesAcomodacao() {
             </div>
 
             <button onClick={reservar} className={styles.buttonReservar}>
-              Realizar reserva
+              Verificar disponibilidade
             </button>
+
+            { textoReserva !== '' ? (
+              <p> {textoReserva} </p> 
+            ) : <></>}
+            
           </div>
         </>
       ) : (
