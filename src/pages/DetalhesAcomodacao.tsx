@@ -6,13 +6,13 @@ import { Acomodacao } from "../util/interfaces";
 import styles from "../styles/pages/detalhesAcomodacao.module.css";
 
 export default function DetalhesAcomodacao() {
-
   const urlParams: { accommodationId: string | undefined } = useParams();
   const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
-  const [dataInicio, setDataInicio] = useState<Date|null>(null);
-  const [dataTermino, setDataTermino] = useState<Date|null>(null);
+  const [dataInicio, setDataInicio] = useState<Date|null>();
+  const [dataTermino, setDataTermino] = useState<Date|null>();
 
-  const [textoReserva, setTextoReserva] = useState<String>('')
+  const [textoReserva, setTextoReserva] = useState<String>("");
+  const [disponibilidade, setDisponibilidade] = useState<boolean>(false);
 
   useEffect(() => {
     let id = urlParams.accommodationId;
@@ -35,7 +35,7 @@ export default function DetalhesAcomodacao() {
     });
   }, [urlParams]);
 
-  async function reservar() {
+  async function verificar() {
     let id = urlParams.accommodationId;
     const apiUrl = process.env.REACT_APP_API_URL;
     axios
@@ -46,33 +46,40 @@ export default function DetalhesAcomodacao() {
       })
       .then((response) => {
         if (response.status === 200) {
-          setTextoReserva('O apartamento está disponível no período de seu interesse!');
-          //alert('reserva ok')
-          {/* 
-          axios
-            .post(`${apiUrl}/reservas`, {
-              idLocador: 1,
-              idAcomodacao: id,
-              dataDeInicio: dataInicio,
-              dataDeTermino: dataTermino,
-            })
-            .then((response) => {
-              alert("Reserva realizada com sucesso!");
-            })
-            .catch((error) => {
-              alert("Ocorreu um erro ao realizar sua reserva!");
-            });
-          */}
+          setTextoReserva(
+            "O imóvel está disponível no período de seu interesse!"
+          );
+          setDisponibilidade(true);
         }
       })
       .catch((error) => {
+        setDisponibilidade(false);
         if (error.response.status === 400) {
-          setTextoReserva('Ops! Preencha todos os campos para verificarmos a disponibilidade do imóvel.');
+          setTextoReserva("Ops! Preencha todos os campos para verificarmos a disponibilidade do imóvel.");
         } else if (error.response.status === 502) {
           setTextoReserva(error.response.data);
         } else {
-          setTextoReserva('Ocorreu algum erro durante a validação. Tente novamente!');
-        } 
+          setTextoReserva("Ocorreu algum erro durante a validação. Tente novamente!");
+        }
+      });
+  }
+
+  async function reservar() {
+    let id = urlParams.accommodationId;
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+    axios
+      .post(`${apiUrl}/reservas`, {
+        idLocador: 1,
+        idAcomodacao: id,
+        dataDeInicio: dataInicio,
+        dataDeTermino: dataTermino,
+      })
+      .then((response) => {
+        alert("Reserva realizada com sucesso!");
+      })
+      .catch((error) => {
+        alert("Ocorreu um erro ao realizar sua reserva!");
       });
   }
 
@@ -103,44 +110,71 @@ export default function DetalhesAcomodacao() {
           <div className={styles.reservar}>
             <h1>{acomodacao.nome}</h1>
             <h2>{acomodacao.descricao}</h2>
-            <div className={styles.datas}>
-              <div className={styles.dataArea}>
-                <p>
-                  <label htmlFor="check-in">Data de check-in:</label>
-                </p>
-                <input
-                  className={styles.datePicker}
-                  type="date"
-                  id="check-in"
-                  name="check-in"
-                  onChange={ (event) => setDataInicio(new Date(event.target.value))}
-                  placeholder="Check In"
-                />
-              </div>
-              <div className={styles.dataArea}>
-                <p>
-                  <label htmlFor="check-in">Data de check-out:</label>
-                </p>
 
-                <input
-                  className={styles.datePicker}
-                  type="date"
-                  id="check-out"
-                  name="check-out"
-                  onChange={ (event) => setDataTermino(new Date(event.target.value)) }
-                  placeholder="Check Out"
-                />
-              </div>
-            </div>
+            {!disponibilidade ? (
+              <>
+                <div className={styles.datas}>
+                  <div className={styles.dataArea}>
+                    <p>
+                      <label htmlFor="check-in">Data de check-in:</label>
+                    </p>
+                    <input
+                      className={styles.datePicker}
+                      type="date"
+                      id="check-in"
+                      name="check-in"
+                      onChange={(event) => setDataInicio(new Date(event.target.value))}
+                      placeholder="Check In"
+                    />
+                  </div>
+                  <div className={styles.dataArea}>
+                    <p>
+                      <label htmlFor="check-in">Data de check-out:</label>
+                    </p>
 
-            <button onClick={reservar} className={styles.buttonReservar}>
-              Verificar disponibilidade
-            </button>
+                    <input
+                      className={styles.datePicker}
+                      type="date"
+                      id="check-out"
+                      name="check-out"
+                      onChange={(event) => setDataTermino(new Date(event.target.value))}
+                      placeholder="Check Out"
+                    />
+                  </div>
+                </div>
 
-            { textoReserva !== '' ? (
-              <p> {textoReserva} </p> 
-            ) : <></>}
-            
+                <button onClick={verificar} className={styles.buttonReservar}>
+                  Verificar disponibilidade
+                </button>
+              </>
+            ) : ( <> </> )}
+
+            {textoReserva !== "" ? (
+              <>
+                <p>{textoReserva}</p>
+
+                {disponibilidade ? (
+                  <>
+                    <p> Reserva de {dataInicio?.toLocaleDateString()} até {dataTermino?.toLocaleDateString()}</p>
+                    <p> Valor total: R$ {((dataTermino!.getTime() - dataInicio!.getTime()) / (24 * 60 * 60 * 1000)) * acomodacao!.preco}</p>
+                    <button onClick={reservar} className={styles.buttonReservar}>
+                      Realizar reserva
+                    </button>
+                    <a
+                      className={styles.voltar}
+                      onClick={() => {
+                        setDisponibilidade(false);
+                        setTextoReserva("");
+                        setDataInicio(null);
+                        setDataTermino(null);
+                      }}
+                    >
+                      Ver outras datas
+                    </a>
+                  </>
+                ) : ( <></> )}
+              </>
+            ) : ( <></> )}
           </div>
         </>
       ) : (

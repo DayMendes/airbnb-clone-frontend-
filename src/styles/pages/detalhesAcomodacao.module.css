@@ -86,3 +86,7 @@ h2 {
 .dataArea {
     flex:1;
 }
+
+.voltar {
+    font-weight: bold;
+}
