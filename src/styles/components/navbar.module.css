@@ -119,7 +119,7 @@
     brightness(121%) contrast(117%);
 }
 
-.navbar > button {
+.navbar > a:last-child {
   /* colocando o botão de login na esquerda */
   margin-left: auto;
   margin-right: 1rem;
@@ -141,6 +141,6 @@
   transition: all 0.2s;
 }
 
-.navbar > button:hover {
+.navbar > a:last-child:hover {
   background: #ff333a;
 }

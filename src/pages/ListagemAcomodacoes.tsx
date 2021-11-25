@@ -10,9 +10,11 @@ import AcomodacaoCard from "../components/AcomodacaoCard";
 import styles from "../styles/pages/listagemAcomodacoes.module.css";
 
 export default function ListagemAcomodacoes() {
-  const { stringBusca, objetoBuscaFiltro, deveBuscar, setDeveBuscar } = useContext(AppContext);
+  const { stringBusca, objetoBuscaFiltro, deveBuscar, setDeveBuscar, setMostarCaixaDeBusca } = useContext(AppContext);
   const [primeiroRender, setPrimeiroRender] = useState(true); // para pesquisar quando a pagina é carregada
   const [acomodacoes, setAcomodacoes] = useState<Acomodacao[] | []>([]);
+
+  useEffect(() => setMostarCaixaDeBusca(true), []); // garantir que a caixa de busca será mostrada
 
   useEffect(() => {
     const apiUrl = process.env.REACT_APP_API_URL;
