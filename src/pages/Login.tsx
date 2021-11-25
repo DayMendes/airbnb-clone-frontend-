@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styles from "../styles/pages/login.module.css";
+import axios from "axios";
 
 export default function Login() {
   const { setMostrarCaixaDeBusca } = useContext(AppContext);
@@ -13,6 +14,12 @@ export default function Login() {
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL!}/auth/login`, {email, senha});
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
