@@ -3,21 +3,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Acomodacao } from "../util/interfaces";
 
-import DatePicker from "react-datepicker";
-import { registerLocale } from "react-datepicker";
-import pt from "date-fns/locale/pt-BR";
-
-import "react-datepicker/dist/react-datepicker.css";
-
 import styles from "../styles/pages/detalhesAcomodacao.module.css";
 
 export default function DetalhesAcomodacao() {
-  registerLocale("pt-BR", pt);
 
   const urlParams: { accommodationId: string | undefined } = useParams();
   const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
-  const [dataInicio, setDataInicio] = useState<Date>(new Date());
-  const [dataTermino, setDataTermino] = useState<Date>(new Date());
+  const [dataInicio, setDataInicio] = useState<Date|null>(null);
+  const [dataTermino, setDataTermino] = useState<Date|null>(null);
 
   useEffect(() => {
     let id = urlParams.accommodationId;
@@ -51,6 +44,8 @@ export default function DetalhesAcomodacao() {
       })
       .then((response) => {
         if (response.status === 200) {
+          alert('reserva ok')
+          {/* 
           axios
             .post(`${apiUrl}/reservas`, {
               idLocador: 1,
@@ -64,10 +59,17 @@ export default function DetalhesAcomodacao() {
             .catch((error) => {
               alert("Ocorreu um erro ao realizar sua reserva!");
             });
+          */}
         }
       })
       .catch((error) => {
-        alert("A acomodação já está locada na data solicitada.");
+        if (error.response.status === 400) {
+          alert('Ops! Preencha todos os campos para verificarmos a disponibilidade do imóvel.');
+        } else if (error.response.status === 500) {
+          alert(error.response.data);
+        } else {
+          alert('Ocorreu algum erro durante a validação. Tente novamente!');
+        } 
       });
   }
 
@@ -108,9 +110,7 @@ export default function DetalhesAcomodacao() {
                   type="date"
                   id="check-in"
                   name="check-in"
-                  onChange={(event) =>
-                    setDataInicio(new Date(event.target.value))
-                  }
+                  onChange={ (event) => setDataInicio(new Date(event.target.value))}
                   placeholder="Check In"
                 />
               </div>
