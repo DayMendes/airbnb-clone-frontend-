@@ -14,6 +14,7 @@ export default function Cadastro() {
   async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
+      axios.defaults.withCredentials = true;
       const response = await axios.post(`${process.env.REACT_APP_API_URL!}/auth/register`, {nome, email, senha});
       console.log(response);
     } catch (error) {

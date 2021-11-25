@@ -15,6 +15,7 @@ export default function Login() {
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
+      axios.defaults.withCredentials = true;
       const response = await axios.post(`${process.env.REACT_APP_API_URL!}/auth/login`, {email, senha});
       console.log(response);
     } catch (error) {
