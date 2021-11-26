@@ -35,6 +35,7 @@ export default function DetalhesAcomodacao() {
         setRequisicaoFeita(true);
         return response;
       } catch (err) {
+        setRequisicaoFeita(true);
         setAcomodacao(null);
       }
     }
@@ -44,7 +45,6 @@ export default function DetalhesAcomodacao() {
         setAcomodacao(acomodacao.data);
       }
     });
-
   }, [urlParams]);
 
   async function verificar() {
