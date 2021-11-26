@@ -12,6 +12,9 @@ interface AppContextData {
 
   mostrarCaixaDeBusca: boolean;
   setMostrarCaixaDeBusca: (booleano: boolean) => void;
+
+  userLogado: boolean;
+  setUserLogado: (booleano: boolean) => void;
 }
 
 interface ObjetoBuscaFiltro {
@@ -34,6 +37,8 @@ export function AppContextProvider(props: { children: ReactNode }) {
   const [deveBuscar, setDeveBuscar] = useState(true);
   const [mostrarCaixaDeBusca, setMostrarCaixaDeBusca] = useState(true);
 
+  const [userLogado, setUserLogado] = useState(false);
+
   const data = {
     stringBusca,
     setStringBusca,
@@ -43,6 +48,8 @@ export function AppContextProvider(props: { children: ReactNode }) {
     setDeveBuscar,
     mostrarCaixaDeBusca,
     setMostrarCaixaDeBusca,
+    userLogado,
+    setUserLogado,
   };
   return <AppContext.Provider value={data}>{props.children}</AppContext.Provider>;
 }

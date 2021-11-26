@@ -5,7 +5,7 @@ import styles from "../styles/pages/login.module.css";
 import axios from "axios";
 
 export default function Login() {
-  const { setMostrarCaixaDeBusca } = useContext(AppContext);
+  const { setMostrarCaixaDeBusca, setUserLogado } = useContext(AppContext);
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -17,6 +17,7 @@ export default function Login() {
     try {
       axios.defaults.withCredentials = true;
       const response = await axios.post(`${process.env.REACT_APP_API_URL!}/auth/login`, {email, senha});
+      setUserLogado(true);
       console.log(response);
     } catch (error) {
       console.error(error);
