@@ -1,14 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import qs from "qs";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useEffect, useState, useContext, useRef } from "react";
-import { Acomodacao } from "../util/interfaces";
-import { AppContext } from "../AppContext";
 import LoadingBar from "react-top-loading-bar";
-
+import { AppContext } from "../AppContext";
 import AcomodacaoCard from "../components/AcomodacaoCard";
-
 import styles from "../styles/pages/listagemAcomodacoes.module.css";
+import { Acomodacao } from "../util/interfaces";
 
 export default function ListagemAcomodacoes() {
   const { stringBusca, objetoBuscaFiltro, deveBuscar, setDeveBuscar, setMostrarCaixaDeBusca } =
@@ -42,13 +40,13 @@ export default function ListagemAcomodacoes() {
     }
 
     if (deveBuscar || primeiroRender) {
-      (loadingRef.current! as any).continuousStart();
+      (loadingRef.current! as any)?.continuousStart();
 
       getAcomodacoes().then((acomodacoes) => {
         if (acomodacoes) {
           setAcomodacoes(acomodacoes.data);
-          (loadingRef.current! as any).complete();
         }
+        (loadingRef.current! as any)?.complete();
       });
       setDeveBuscar(false);
       setPrimeiroRender(false);
