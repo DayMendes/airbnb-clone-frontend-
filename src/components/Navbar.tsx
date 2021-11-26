@@ -9,14 +9,17 @@ import { useContext } from "react";
 import SelecaoFiltro from "./SelecaoFiltro";
 
 export default function Navbar() {
-  const { stringBusca, setStringBusca, setDeveBuscar, mostrarCaixaDeBusca } =
+  const { stringBusca, setStringBusca, setDeveBuscar, mostrarCaixaDeBusca, userLogado, userName } =
     useContext(AppContext);
 
   return (
     <nav className={styles.navbar}>
-      <Link to="/">
-        <img src={logo} alt="Logo Airbnb" />
-      </Link>
+      <div className={styles.logoContainer}>
+        <Link to="/">
+          <img src={logo} alt="Logo Airbnb" />
+        </Link>
+      </div>
+
       {mostrarCaixaDeBusca && (
         <form
           onSubmit={(event) => {
@@ -46,18 +49,24 @@ export default function Navbar() {
                   x
                 </span>
               )}
+
+              <button type="submit" className={styles.searchButton}>
+                <img src={searchIcon} alt="Lupa de pesquisa" />
+              </button>
             </div>
 
             <SelecaoFiltro />
           </div>
-
-          <button type="submit">
-            <img src={searchIcon} alt="Lupa de pesquisa" />
-          </button>
         </form>
       )}
 
-      <Link to="/login">Login</Link>
+      <div className={styles.loginInfoContainer}>
+        {userLogado ? (
+          <span className={styles.userInfo}>Bem vindo {userName}!</span>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
+      </div>
     </nav>
   );
 }

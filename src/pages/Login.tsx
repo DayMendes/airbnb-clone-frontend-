@@ -5,7 +5,7 @@ import styles from "../styles/pages/login.module.css";
 import axios from "axios";
 
 export default function Login() {
-  const { setMostrarCaixaDeBusca, setUserLogado } = useContext(AppContext);
+  const { setMostrarCaixaDeBusca, setUserLogado, setUserName } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -25,6 +25,7 @@ export default function Login() {
         senha,
       });
       setUserLogado(true);
+      setUserName(response.data.user.nome);
       navigate("/");
     } catch (error) {
       setLoginErro(true);

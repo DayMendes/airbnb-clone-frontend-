@@ -5,7 +5,7 @@ import { AppContext } from "../AppContext";
 import styles from "../styles/pages/cadastro.module.css";
 
 export default function Cadastro() {
-  const { setMostrarCaixaDeBusca, setUserLogado } = useContext(AppContext);
+  const { setMostrarCaixaDeBusca, setUserLogado, setUserName } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -27,6 +27,7 @@ export default function Cadastro() {
         senha,
       });
       setUserLogado(true);
+      setUserName(response.data.user.nome);
       navigate("/");
     } catch (error) {
       setCadastroErro(true);
