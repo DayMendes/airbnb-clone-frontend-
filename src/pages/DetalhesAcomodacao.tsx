@@ -5,12 +5,17 @@ import { Acomodacao } from "../util/interfaces";
 
 import styles from "../styles/pages/detalhesAcomodacao.module.css";
 
+import { Spinner } from "react-activity";
+import "react-activity/dist/Spinner.css";
+
+
 export default function DetalhesAcomodacao() {
   const urlParams: { accommodationId: string | undefined } = useParams();
   const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
   const [dataInicio, setDataInicio] = useState<Date|null>();
   const [dataTermino, setDataTermino] = useState<Date|null>();
 
+  const [requisicaoFeita, setRequisicaoFeita] = useState<boolean>(false);
   const [textoReserva, setTextoReserva] = useState<String>("");
   const [disponibilidade, setDisponibilidade] = useState<boolean>(false);
 
@@ -22,6 +27,7 @@ export default function DetalhesAcomodacao() {
       let response: AxiosResponse<Acomodacao>;
       try {
         response = await axios.get<Acomodacao>(`${apiUrl}/acomodacoes/${id}`);
+        setRequisicaoFeita(true);
         return response;
       } catch (err) {
         setAcomodacao(null);
@@ -33,6 +39,7 @@ export default function DetalhesAcomodacao() {
         setAcomodacao(acomodacao.data);
       }
     });
+
   }, [urlParams]);
 
   async function verificar() {
@@ -145,10 +152,10 @@ export default function DetalhesAcomodacao() {
 
             {textoReserva !== "" ? (
               <>
-                <p>{textoReserva}</p>
+                <p className={styles.textoAviso}>{textoReserva}</p>
 
                 {disponibilidade ? (
-                  <>
+                  <div className={styles.informacoesReserva}>
                     <p> Reserva de {dataInicio?.toLocaleDateString()} até {dataTermino?.toLocaleDateString()}</p>
                     <p> Valor total: R$ {((dataTermino!.getTime() - dataInicio!.getTime()) / (24 * 60 * 60 * 1000)) * acomodacao!.preco}</p>
                     <button onClick={reservar} className={styles.buttonReservar}>
@@ -163,16 +170,18 @@ export default function DetalhesAcomodacao() {
                         setDataTermino(null);
                       }}
                     >
-                      Ver outras datas
+                      Selecionar outra data
                     </a>
-                  </>
+                  </div>
                 ) : ( <></> )}
               </>
             ) : ( <></> )}
           </div>
         </>
       ) : (
-        <h1>Ops! Algo de errado aconteceu.</h1>
+        <>
+        { requisicaoFeita ? <h1>Ops! Algo de errado aconteceu.</h1> : <Spinner /> }
+        </>
       )}
     </section>
   );

@@ -89,4 +89,16 @@ h2 {
 
 .voltar {
     font-weight: bold;
+    align-self: center;
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.informacoesReserva {
+    display: flex;
+    flex-direction: column;
+}
+
+.textoAviso {
+    margin-top: 0.5rem;
 }
