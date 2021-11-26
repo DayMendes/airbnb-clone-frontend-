@@ -9,51 +9,64 @@ import { useContext } from "react";
 import SelecaoFiltro from "./SelecaoFiltro";
 
 export default function Navbar() {
-    const { stringBusca, setStringBusca, setDeveBuscar } = useContext(AppContext);
+  const { stringBusca, setStringBusca, setDeveBuscar, mostrarCaixaDeBusca, userLogado, userName } =
+    useContext(AppContext);
 
-    return (
-        <nav className={styles.navbar}>
-            <Link to="/">
-                <img src={logo} alt="Logo Airbnb" />
-            </Link>
-            <form
-                onSubmit={(event) => {
-                    event.preventDefault();
-                    setDeveBuscar(true);
+  return (
+    <nav className={styles.navbar}>
+      <div className={styles.logoContainer}>
+        <Link to="/">
+          <img src={logo} alt="Logo Airbnb" />
+        </Link>
+      </div>
+
+      {mostrarCaixaDeBusca && (
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            setDeveBuscar(true);
+          }}
+        >
+          <div className={styles.userInput}>
+            <div>
+              <input
+                type="text"
+                placeholder="Encontre o que você procura aqui!"
+                value={stringBusca}
+                onChange={(event) => {
+                  setStringBusca(event.target.value);
                 }}
-            >
-                <div className={styles.userInput}>
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Encontre o que você procura aqui!"
-                            value={stringBusca}
-                            onChange={(event) => {
-                                setStringBusca(event.target.value);
-                            }}
-                        />
-                        {stringBusca && (
-                            <span
-                                onClick={() => {
-                                    // limpar string de busca
-                                    setStringBusca("");
-                                    // e buscar novamente
-                                    setDeveBuscar(true);
-                                }}
-                            >
-                                x
-                            </span>
-                        )}
-                    </div>
+              />
+              {stringBusca && (
+                <span
+                  onClick={() => {
+                    // limpar string de busca
+                    setStringBusca("");
+                    // e buscar novamente
+                    setDeveBuscar(true);
+                  }}
+                >
+                  x
+                </span>
+              )}
 
-                    <SelecaoFiltro />
-                </div>
+              <button type="submit" className={styles.searchButton}>
+                <img src={searchIcon} alt="Lupa de pesquisa" />
+              </button>
+            </div>
 
-                <button type="submit">
-                    <img src={searchIcon} alt="Lupa de pesquisa" />
-                </button>
-            </form>
-            <button>Login</button>
-        </nav>
-    );
+            <SelecaoFiltro />
+          </div>
+        </form>
+      )}
+
+      <div className={styles.loginInfoContainer}>
+        {userLogado ? (
+          <span className={styles.userInfo}>Bem vindo {userName}!</span>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
+      </div>
+    </nav>
+  );
 }

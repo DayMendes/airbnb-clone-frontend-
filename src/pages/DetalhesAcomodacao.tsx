@@ -1,15 +1,18 @@
 import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Acomodacao } from "../util/interfaces";
-
-import styles from "../styles/pages/detalhesAcomodacao.module.css";
 
 import { Spinner } from "react-activity";
 import "react-activity/dist/Spinner.css";
 
+import styles from "../styles/pages/detalhesAcomodacao.module.css";
+import { AppContext } from "../AppContext";
 
 export default function DetalhesAcomodacao() {
+
+  const { setMostrarCaixaDeBusca } = useContext(AppContext);
+
   const urlParams: { accommodationId: string | undefined } = useParams();
   const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
   const [dataInicio, setDataInicio] = useState<Date|null>();
@@ -18,6 +21,8 @@ export default function DetalhesAcomodacao() {
   const [requisicaoFeita, setRequisicaoFeita] = useState<boolean>(false);
   const [textoReserva, setTextoReserva] = useState<String>("");
   const [disponibilidade, setDisponibilidade] = useState<boolean>(false);
+
+  useEffect(() => setMostrarCaixaDeBusca(false), [setMostrarCaixaDeBusca]); // garantir que a caixa de busca não será mostrada
 
   useEffect(() => {
     let id = urlParams.accommodationId;
@@ -77,7 +82,6 @@ export default function DetalhesAcomodacao() {
 
     axios
       .post(`${apiUrl}/reservas`, {
-        idLocador: 1,
         idAcomodacao: id,
         dataDeInicio: dataInicio,
         dataDeTermino: dataTermino,

@@ -1,14 +1,19 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../AppContext";
 import styles from "../styles/pages/cadastroAcomodacoes.module.css";
 import { Acomodacao } from "../util/interfaces";
 
 export default function CadastroAcomodacoes() {
+  const { setMostrarCaixaDeBusca } = useContext(AppContext);
+
   const [acomodacoes, setAcomodacoes] = useState<Acomodacao>({
     local: {} as Acomodacao["local"],
     comodidades: {} as Acomodacao["comodidades"],
     regras: {} as Acomodacao["regras"],
   } as Acomodacao);
+
+  useEffect(() => setMostrarCaixaDeBusca(false), [setMostrarCaixaDeBusca]); // garantir que a caixa de busca não será mostrada
 
   async function handleSubmit(event: any) {
     event.preventDefault();
