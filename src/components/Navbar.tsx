@@ -61,8 +61,10 @@ export default function Navbar() {
       )}
 
       <div className={styles.loginInfoContainer}>
-        {userLogado ? (
+        {userLogado ? (<>
           <span className={styles.userInfo}>Bem vindo {userName}!</span>
+          <button className={styles.logOff}>Logoff</button>
+          </>
         ) : (
           <Link to="/login">Login</Link>
         )}
