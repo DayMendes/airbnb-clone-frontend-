@@ -65,17 +65,26 @@
   background: #ff333a;
 }
 
-.loginContainer > p {
+.loginContainer > p:last-child {
   margin: 0.75rem 0 1rem 0;
 
   font-size: 1.1rem;
 }
 
-.loginContainer > p > a {
+.loginContainer > p:last-child > a {
   color: var(--red);
   transition: all 0.1s;
 }
 
-.loginContainer > p > a:hover {
+.loginContainer > p:last-child > a:hover {
   color: #ff333a;
+}
+
+.errorMessage {
+  color: var(--red);
+
+  margin-bottom: 0;
+
+  text-align: center;
+  font-size: 1.05rem;
 }

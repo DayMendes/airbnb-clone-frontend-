@@ -1,11 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styles from "../styles/pages/login.module.css";
 import axios from "axios";
 
 export default function Login() {
   const { setMostrarCaixaDeBusca, setUserLogado } = useContext(AppContext);
+
+  const navigate = useNavigate();
+
+  const [loginErro, setLoginErro] = useState(false);
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -21,9 +25,9 @@ export default function Login() {
         senha,
       });
       setUserLogado(true);
-      console.log(response);
+      navigate("/");
     } catch (error) {
-      console.error(error);
+      setLoginErro(true);
     }
   }
 
@@ -51,6 +55,9 @@ export default function Login() {
 
         <button type="submit">Entrar</button>
       </form>
+      {loginErro && (
+        <p className={styles.errorMessage}>Usuário ou senha incorretos! Tente novamente.</p>
+      )}
       <p>
         Não tem cadastro? <Link to="/cadastro">Cadastre-se!</Link>
       </p>
