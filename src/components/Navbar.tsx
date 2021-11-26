@@ -9,7 +9,8 @@ import { useContext } from "react";
 import SelecaoFiltro from "./SelecaoFiltro";
 
 export default function Navbar() {
-  const { stringBusca, setStringBusca, setDeveBuscar, mostrarCaixaDeBusca } = useContext(AppContext);
+  const { stringBusca, setStringBusca, setDeveBuscar, mostrarCaixaDeBusca } =
+    useContext(AppContext);
 
   return (
     <nav className={styles.navbar}>
