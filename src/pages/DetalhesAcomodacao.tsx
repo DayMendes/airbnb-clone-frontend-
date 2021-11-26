@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Acomodacao } from "../util/interfaces";
 
@@ -10,14 +10,19 @@ import pt from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
 
 import styles from "../styles/pages/detalhesAcomodacao.module.css";
+import { AppContext } from "../AppContext";
 
 export default function DetalhesAcomodacao() {
   registerLocale("pt-BR", pt);
+
+  const { setMostrarCaixaDeBusca } = useContext(AppContext);
 
   const urlParams: { accommodationId: string | undefined } = useParams();
   const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
   const [dataInicio, setDataInicio] = useState<Date>(new Date());
   const [dataTermino, setDataTermino] = useState<Date>(new Date());
+
+  useEffect(() => setMostrarCaixaDeBusca(false), [setMostrarCaixaDeBusca]); // garantir que a caixa de busca não será mostrada
 
   useEffect(() => {
     let id = urlParams.accommodationId;
