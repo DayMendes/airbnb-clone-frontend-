@@ -1,10 +1,16 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { AppContext } from "../AppContext";
 import styles from "../styles/pages/cadastro.module.css";
 
 export default function Cadastro() {
-  const { setMostrarCaixaDeBusca } = useContext(AppContext);
+  const { setMostrarCaixaDeBusca, setUserLogado } = useContext(AppContext);
+
+  const navigate = useNavigate();
+
+  const [cadastroErro, setCadastroErro] = useState(false);
+
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -20,9 +26,10 @@ export default function Cadastro() {
         email,
         senha,
       });
-      console.log(response);
+      setUserLogado(true);
+      navigate("/");
     } catch (error) {
-      console.error(error);
+      setCadastroErro(true);
     }
   }
 
@@ -59,6 +66,8 @@ export default function Cadastro() {
 
         <button type="submit">Cadastrar</button>
       </form>
+
+      {cadastroErro && <p className={styles.errorMessage}>Este email já está cadastrado!</p>}
     </div>
   );
 }

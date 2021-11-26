@@ -79,3 +79,12 @@
 .loginContainer > p > a:hover {
   color: #ff333a;
 }
+
+.errorMessage {
+  color: var(--red);
+
+  margin-top: 1rem;
+
+  text-align: center;
+  font-size: 1.05rem;
+}

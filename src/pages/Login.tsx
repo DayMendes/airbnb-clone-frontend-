@@ -55,9 +55,11 @@ export default function Login() {
 
         <button type="submit">Entrar</button>
       </form>
+
       {loginErro && (
         <p className={styles.errorMessage}>Usuário ou senha incorretos! Tente novamente.</p>
       )}
+
       <p>
         Não tem cadastro? <Link to="/cadastro">Cadastre-se!</Link>
       </p>
