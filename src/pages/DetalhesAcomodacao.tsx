@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Acomodacao } from "../util/interfaces";
 
 import { Spinner } from "react-activity";
@@ -9,7 +9,10 @@ import "react-activity/dist/Spinner.css";
 import styles from "../styles/pages/detalhesAcomodacao.module.css";
 import { AppContext } from "../AppContext";
 
+
 export default function DetalhesAcomodacao() {
+
+  let navigate = useNavigate();
 
   const { setMostrarCaixaDeBusca } = useContext(AppContext);
 
@@ -58,9 +61,7 @@ export default function DetalhesAcomodacao() {
       })
       .then((response) => {
         if (response.status === 200) {
-          setTextoReserva(
-            "O imóvel está disponível no período de seu interesse!"
-          );
+          setTextoReserva("O imóvel está disponível no período de seu interesse!");
           setDisponibilidade(true);
         }
       })
@@ -88,9 +89,14 @@ export default function DetalhesAcomodacao() {
       })
       .then((response) => {
         alert("Reserva realizada com sucesso!");
+        navigate("/reservado");
       })
       .catch((error) => {
-        alert("Ocorreu um erro ao realizar sua reserva!");
+        if (error.response.status===401) {
+          navigate("/login");
+        } else {
+          alert("Ocorreu um erro ao realizar sua reserva!");
+        }
       });
   }
 

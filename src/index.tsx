@@ -11,6 +11,7 @@ import PaginaNaoEncontrada from "./pages/PaginaNaoEncontrada";
 import CadastroAcomodacoes from "./pages/CadastroAcomodacoes";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
+import ReservaRealizada from "./pages/ReservaRealizada"
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.render(
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/:accommodationId" element={<DetalhesAcomodacao />} />
+            <Route path="/reservado" element={<ReservaRealizada />} />
             <Route path="*" element={<PaginaNaoEncontrada />} />
           </Route>
         </Routes>
