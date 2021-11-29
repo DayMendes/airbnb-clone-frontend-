@@ -165,3 +165,21 @@
 
   font-size: 1.2rem;
 }
+
+.logOff{
+  position: absolute;
+
+  top: 3.6rem;
+  right: 2rem;
+
+  font-size: 0.9rem;
+  color: var(--red);
+
+  background: transparent;
+  border: none;
+  transition: color 0.15s;
+}
+
+.logOff:hover{
+  color: var(--red-highlight);
+}
