@@ -1,7 +1,9 @@
 .titleForm {
   text-align: center;
   font-size: 2rem;
-  margin-top: 3rem;
+  margin-top: 5rem;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .cadastroAcomodacoes {
@@ -16,12 +18,35 @@
   border-radius: 8px;
 }
 .cadastroAcomodacoes input {
-  display: block;
+  display: flex;
   margin-bottom: 15px;
   width: 100%;
   padding: 7px 10px;
   margin-bottom: 10px;
   font-size: 14px;
+}
+.cadastroAcomodacoes .imagem {
+  display: flex;
+  margin-bottom: 20px;
+  border: 1px dashed #ddd;
+  background-size: cover;
+  cursor: pointer;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cadastroAcomodacoes input[type="file"] {
+  display: none;
+}
+
+.cadastroAcomodacoes label.imagem.has-imagem {
+  border: 0;
+}
+
+.cadastroAcomodacoes label.imagem.has-imagem img {
+  display: none;
 }
 
 .cadastroAcomodacoes fieldset {
@@ -54,18 +79,30 @@ select {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-.grupo2 {
-  display: inline-block;
-  flex-direction: row;
+.cadastroAcomodacoes .comodidades {
+  display: flex;
   margin: 0 15px;
-  width: 40%;
+  align-items: center;
+  width: 90%;
 }
 
-.regras {
+.cadastroAcomodacoes #quartosLabel,
+#banheirosLabel {
+  padding-left: 15px;
+}
+.cadastroAcomodacoes .espaco1 {
+  margin-left: 5px;
+}
+
+.cadastroAcomodacoes .espaco2 {
+  margin-left: 15px;
+}
+
+.cadastroAcomodacoes .regras {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   width: 50%;
+  margin: 0 15px;
+  align-items: flex-end;
   accent-color: #d24542;
 }
 

@@ -18,8 +18,8 @@ export default function DetalhesAcomodacao() {
 
   const urlParams: { accommodationId: string | undefined } = useParams();
   const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
-  const [dataInicio, setDataInicio] = useState<Date|null>();
-  const [dataTermino, setDataTermino] = useState<Date|null>();
+  const [dataInicio, setDataInicio] = useState<Date | null>();
+  const [dataTermino, setDataTermino] = useState<Date | null>();
 
   const [requisicaoFeita, setRequisicaoFeita] = useState<boolean>(false);
   const [textoReserva, setTextoReserva] = useState<String>("");
@@ -68,7 +68,9 @@ export default function DetalhesAcomodacao() {
       .catch((error) => {
         setDisponibilidade(false);
         if (error.response.status === 400) {
-          setTextoReserva("Ops! Preencha todos os campos para verificarmos a disponibilidade do imóvel.");
+          setTextoReserva(
+            "Ops! Preencha todos os campos para verificarmos a disponibilidade do imóvel."
+          );
         } else if (error.response.status === 502) {
           setTextoReserva(error.response.data);
         } else {
@@ -109,7 +111,8 @@ export default function DetalhesAcomodacao() {
             <p>Tipo de acomodação: {acomodacao.categoria}</p>
             <p>Até {acomodacao.numeroDePessoas} pessoas</p>
             <p>
-              Comodidades: {acomodacao.comodidades.banheiros} banheiro(s), {acomodacao.comodidades.quartos} quarto(s)
+              Comodidades: {acomodacao.comodidades.banheiros} banheiro(s),{" "}
+              {acomodacao.comodidades.quartos} quarto(s)
             </p>
             <p>
               Regras: {acomodacao.regras.animais ? "permitido" : "proibido"} animais,{" "}
@@ -157,7 +160,9 @@ export default function DetalhesAcomodacao() {
                   Verificar disponibilidade
                 </button>
               </>
-            ) : ( <> </> )}
+            ) : (
+              <> </>
+            )}
 
             {textoReserva !== "" ? (
               <>
@@ -165,12 +170,21 @@ export default function DetalhesAcomodacao() {
 
                 {disponibilidade ? (
                   <div className={styles.informacoesReserva}>
-                    <p> Reserva de {dataInicio?.toLocaleDateString()} até {dataTermino?.toLocaleDateString()}</p>
-                    <p> Valor total: R$ {((dataTermino!.getTime() - dataInicio!.getTime()) / (24 * 60 * 60 * 1000)) * acomodacao!.preco}</p>
+                    <p>
+                      {" "}
+                      Reserva de {dataInicio?.toLocaleDateString()} até{" "}
+                      {dataTermino?.toLocaleDateString()}
+                    </p>
+                    <p>
+                      {" "}
+                      Valor total: R${" "}
+                      {((dataTermino!.getTime() - dataInicio!.getTime()) / (24 * 60 * 60 * 1000)) *
+                        acomodacao!.preco}
+                    </p>
                     <button onClick={reservar} className={styles.buttonReservar}>
                       Realizar reserva
                     </button>
-                    <a
+                    <button
                       className={styles.voltar}
                       onClick={() => {
                         setDisponibilidade(false);
@@ -180,17 +194,19 @@ export default function DetalhesAcomodacao() {
                       }}
                     >
                       Selecionar outra data
-                    </a>
+                    </button>
                   </div>
-                ) : ( <></> )}
+                ) : (
+                  <></>
+                )}
               </>
-            ) : ( <></> )}
+            ) : (
+              <></>
+            )}
           </div>
         </>
       ) : (
-        <>
-        { requisicaoFeita ? <h1>Ops! Algo de errado aconteceu.</h1> : <Spinner /> }
-        </>
+        <>{requisicaoFeita ? <h1>Ops! Algo de errado aconteceu.</h1> : <Spinner />}</>
       )}
     </section>
   );
