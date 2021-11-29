@@ -1,0 +1,15 @@
+.div {
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.link {
+   text-align: center; 
+   color: var(--red);
+   font-size: 1.2rem;
+}
+
+.titulo {
+    font-size: 2rem;
+}
