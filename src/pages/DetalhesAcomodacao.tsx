@@ -10,13 +10,12 @@ import styles from "../styles/pages/detalhesAcomodacao.module.css";
 import { AppContext } from "../AppContext";
 
 export default function DetalhesAcomodacao() {
-
   const { setMostrarCaixaDeBusca } = useContext(AppContext);
 
   const urlParams: { accommodationId: string | undefined } = useParams();
   const [acomodacao, setAcomodacao] = useState<Acomodacao | null>();
-  const [dataInicio, setDataInicio] = useState<Date|null>();
-  const [dataTermino, setDataTermino] = useState<Date|null>();
+  const [dataInicio, setDataInicio] = useState<Date | null>();
+  const [dataTermino, setDataTermino] = useState<Date | null>();
 
   const [requisicaoFeita, setRequisicaoFeita] = useState<boolean>(false);
   const [textoReserva, setTextoReserva] = useState<String>("");
@@ -59,7 +58,7 @@ export default function DetalhesAcomodacao() {
       .then((response) => {
         if (response.status === 200) {
           setTextoReserva(
-            "O imóvel está disponível no período de seu interesse!"
+            "O imóvel está disponível no período de seu interesse!",
           );
           setDisponibilidade(true);
         }
@@ -67,11 +66,15 @@ export default function DetalhesAcomodacao() {
       .catch((error) => {
         setDisponibilidade(false);
         if (error.response.status === 400) {
-          setTextoReserva("Ops! Preencha todos os campos para verificarmos a disponibilidade do imóvel.");
+          setTextoReserva(
+            "Ops! Preencha todos os campos para verificarmos a disponibilidade do imóvel.",
+          );
         } else if (error.response.status === 502) {
           setTextoReserva(error.response.data);
         } else {
-          setTextoReserva("Ocorreu algum erro durante a validação. Tente novamente!");
+          setTextoReserva(
+            "Ocorreu algum erro durante a validação. Tente novamente!",
+          );
         }
       });
   }
@@ -99,16 +102,22 @@ export default function DetalhesAcomodacao() {
       {acomodacao != null ? (
         <>
           <div className={styles.informacoes}>
-            <img className={styles.img} src={acomodacao.imagem} alt={acomodacao?.descricao} />
+            <img
+              className={styles.img}
+              src={acomodacao.imagem}
+              alt={acomodacao?.descricao}
+            />
             <h1>Informações sobre o local: </h1>
             <p>Tipo de acomodação: {acomodacao.categoria}</p>
             <p>Até {acomodacao.numeroDePessoas} pessoas</p>
             <p>
-              Comodidades: {acomodacao.comodidades.banheiros} banheiro(s), {acomodacao.comodidades.quartos} quarto(s)
+              Comodidades: {acomodacao.comodidades.banheiros} banheiro(s),{" "}
+              {acomodacao.comodidades.quartos} quarto(s)
             </p>
             <p>
-              Regras: {acomodacao.regras.animais ? "permitido" : "proibido"} animais,{" "}
-              {acomodacao.regras.fumar ? "permitido" : "proibido"} fumar
+              Regras: {acomodacao.regras.animais ? "permitido" : "proibido"}{" "}
+              animais, {acomodacao.regras.fumar ? "permitido" : "proibido"}{" "}
+              fumar
             </p>
             <p>Valor: R$ {acomodacao.preco}</p>
           </div>
@@ -128,7 +137,9 @@ export default function DetalhesAcomodacao() {
                       type="date"
                       id="check-in"
                       name="check-in"
-                      onChange={(event) => setDataInicio(new Date(event.target.value))}
+                      onChange={(event) =>
+                        setDataInicio(new Date(event.target.value))
+                      }
                       placeholder="Check In"
                     />
                   </div>
@@ -142,7 +153,9 @@ export default function DetalhesAcomodacao() {
                       type="date"
                       id="check-out"
                       name="check-out"
-                      onChange={(event) => setDataTermino(new Date(event.target.value))}
+                      onChange={(event) =>
+                        setDataTermino(new Date(event.target.value))
+                      }
                       placeholder="Check Out"
                     />
                   </div>
@@ -152,7 +165,9 @@ export default function DetalhesAcomodacao() {
                   Verificar disponibilidade
                 </button>
               </>
-            ) : ( <> </> )}
+            ) : (
+              <> </>
+            )}
 
             {textoReserva !== "" ? (
               <>
@@ -160,9 +175,22 @@ export default function DetalhesAcomodacao() {
 
                 {disponibilidade ? (
                   <div className={styles.informacoesReserva}>
-                    <p> Reserva de {dataInicio?.toLocaleDateString()} até {dataTermino?.toLocaleDateString()}</p>
-                    <p> Valor total: R$ {((dataTermino!.getTime() - dataInicio!.getTime()) / (24 * 60 * 60 * 1000)) * acomodacao!.preco}</p>
-                    <button onClick={reservar} className={styles.buttonReservar}>
+                    <p>
+                      {" "}
+                      Reserva de {dataInicio?.toLocaleDateString()} até{" "}
+                      {dataTermino?.toLocaleDateString()}
+                    </p>
+                    <p>
+                      {" "}
+                      Valor total: R${" "}
+                      {((dataTermino!.getTime() - dataInicio!.getTime()) /
+                        (24 * 60 * 60 * 1000)) *
+                        acomodacao!.preco}
+                    </p>
+                    <button
+                      onClick={reservar}
+                      className={styles.buttonReservar}
+                    >
                       Realizar reserva
                     </button>
                     <a
@@ -177,14 +205,22 @@ export default function DetalhesAcomodacao() {
                       Selecionar outra data
                     </a>
                   </div>
-                ) : ( <></> )}
+                ) : (
+                  <></>
+                )}
               </>
-            ) : ( <></> )}
+            ) : (
+              <></>
+            )}
           </div>
         </>
       ) : (
         <>
-        { requisicaoFeita ? <h1>Ops! Algo de errado aconteceu.</h1> : <Spinner /> }
+          {requisicaoFeita ? (
+            <h1>Ops! Algo de errado aconteceu.</h1>
+          ) : (
+            <Spinner />
+          )}
         </>
       )}
     </section>

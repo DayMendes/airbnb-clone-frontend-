@@ -2,20 +2,20 @@ import { Acomodacao } from "../util/interfaces";
 import styles from "../styles/components/AcomodacaoCard.module.css";
 
 interface AcomodacaoProps {
-    acomodacao: Acomodacao;
+  acomodacao: Acomodacao;
 }
 
 export default function AcomdacaoCard({ acomodacao }: AcomodacaoProps) {
-    return (
-        <section className={styles.acomodacaoCard}>
-            <h2>{acomodacao.nome}</h2>
-            <h3>{acomodacao.descricao}</h3>
+  return (
+    <section className={styles.acomodacaoCard}>
+      <h2>{acomodacao.nome}</h2>
+      <h3>{acomodacao.descricao}</h3>
 
-            <span>
-                {acomodacao.local.cidade} | {acomodacao.local.estado}
-            </span>
+      <span>
+        {acomodacao.local.cidade} | {acomodacao.local.estado}
+      </span>
 
-            <img src={acomodacao.imagem} alt={acomodacao.descricao} />
-        </section>
-    );
+      <img src={acomodacao.imagem_url} alt={acomodacao.descricao} />
+    </section>
+  );
 }

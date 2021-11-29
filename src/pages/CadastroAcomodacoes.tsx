@@ -1,54 +1,116 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../AppContext";
+import axios, { AxiosResponse } from "axios";
+import { useContext, useEffect, useState, useMemo } from "react";
 import styles from "../styles/pages/cadastroAcomodacoes.module.css";
 import { Acomodacao } from "../util/interfaces";
+import camera from "../images/camera.svg";
+import { AppContext } from "../AppContext";
+
+interface IBGEUFResponse {
+  sigla: string;
+}
 
 export default function CadastroAcomodacoes() {
   const { setMostrarCaixaDeBusca } = useContext(AppContext);
-
+  useEffect(() => setMostrarCaixaDeBusca(false), [setMostrarCaixaDeBusca]);
   const [acomodacoes, setAcomodacoes] = useState<Acomodacao>({
     local: {} as Acomodacao["local"],
     comodidades: {} as Acomodacao["comodidades"],
     regras: {} as Acomodacao["regras"],
-  } as Acomodacao);
+  } as unknown as Acomodacao);
 
-  useEffect(() => setMostrarCaixaDeBusca(false), [setMostrarCaixaDeBusca]); // garantir que a caixa de busca não será mostrada
+  const [estados, setEstados] = useState<string[]>([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [imagem, setImagem] = useState(null);
+  const preview = useMemo(() => {
+    return imagem ? URL.createObjectURL(imagem) : null;
+  }, [imagem]);
+
+  useEffect(() => {
+    axios
+      .get<IBGEUFResponse[]>(
+        "https://servicodados.ibge.gov.br/api/v1/localidades/estados/",
+      )
+      .then((response) => {
+        const estadosIniciais = response.data.map((uf) => uf.sigla);
+
+        setEstados(estadosIniciais);
+      });
+  }, []);
 
   async function handleSubmit(event: any) {
     event.preventDefault();
-    const apiUrl = process.env.REACT_APP_API_URL;
-    axios.post(`${apiUrl}/acomodacoes/criar`, acomodacoes).catch((err) => {
-      alert(err);
-    });
+
+    const data = new FormData();
+    data.append("nome", acomodacoes.nome);
+    data.append("descricao", acomodacoes.descricao);
+    data.append("categoria", acomodacoes.categoria);
+    data.append("imagem", imagem!);
+    data.append("preco", JSON.stringify(acomodacoes.preco));
+    data.append("local", JSON.stringify(acomodacoes["local"]));
+    data.append("numeroDePessoas", JSON.stringify(acomodacoes.numeroDePessoas));
+    data.append("comodidades", JSON.stringify(acomodacoes["comodidades"]));
+    data.append("regras", JSON.stringify(acomodacoes["regras"]));
+
+    axios
+      .post(`${apiUrl}/acomodacoes`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          alert("Acomodação cadastrada com sucesso!");
+        }
+      })
+      .catch((error) => {
+        if (error.code === 400) {
+          alert(
+            "Ocorreu um erro ao cadastrar sua acomodação, Verifique as informações e tente novamente!",
+          );
+        }
+      });
   }
+
   return (
     <>
       <h2 className={styles.titleForm}> Cadastre sua acomodação</h2>
-      <form className={styles.cadastroAcomodacoes} onSubmit={handleSubmit}>
+      <form
+        className={styles.cadastroAcomodacoes}
+        method="post"
+        encType="multipart/form-data"
+        onSubmit={handleSubmit}
+      >
         <label htmlFor="nome">Dê um nome para sua acomodação</label>
         <input
           type="text"
-          id="descnomericao"
-          placeholder="Lugar Tranquilo com área verde"
+          name="nome"
+          id="nome"
+          placeholder="Ex: Lugar Tranquilo com área verde"
           value={acomodacoes.nome}
-          onChange={(event) => setAcomodacoes({ ...acomodacoes, nome: event.target.value })}
+          onChange={(event) =>
+            setAcomodacoes({ ...acomodacoes, nome: event.target.value })
+          }
         />
 
         <label htmlFor="descricao">Descrição</label>
         <textarea
+          name="descricao"
           id="descricao"
           placeholder="Descreva o que o seu espaço tem a oferecer, por ex: Piscina, churrasqueira, wifi..."
           value={acomodacoes.descricao}
-          onChange={(event) => setAcomodacoes({ ...acomodacoes, descricao: event.target.value })}
+          onChange={(event) =>
+            setAcomodacoes({ ...acomodacoes, descricao: event.target.value })
+          }
         />
 
         <label htmlFor="categoria">Tipo de acomodação</label>
         <select
-          id="categoria"
           name="categoria"
+          id="categoria"
           value={acomodacoes.categoria}
-          onChange={(event) => setAcomodacoes({ ...acomodacoes, categoria: event.target.value })}
+          onChange={(event) =>
+            setAcomodacoes({ ...acomodacoes, categoria: event.target.value })
+          }
         >
           <option value="selecao">Selecione</option>
           <option value="apartamento">Apartamento</option>
@@ -56,19 +118,26 @@ export default function CadastroAcomodacoes() {
           <option value="pousada">Pousada</option>
           <option value="hotel">Hotel</option>
           <option value="fazenda">Fazenda</option>
+          <option value="chale">Chalé</option>
         </select>
 
-        <label id="file">Escolha a imagem</label>
-        <input
-          type="file"
-          id="file"
-          value={acomodacoes.imagem}
-          onChange={(event) => setAcomodacoes({ ...acomodacoes, imagem: event.target.value })}
-        />
+        <label htmlFor="imagem">Adicione fotos da sua acomodação</label>
+        <label
+          className={styles.imagem}
+          style={{ backgroundImage: `url(${preview})` }}
+        >
+          <input
+            type="file"
+            onChange={(event: any) => setImagem(event.target.files[0])}
+            className={imagem ? "has-imagem" : ""}
+          />
+          <img src={camera} alt="Select img" />
+        </label>
 
         <label htmlFor="preco">Preço</label>
         <input
           type="number"
+          name="preco"
           id="preco"
           placeholder="Valor cobrado por dia"
           value={acomodacoes.preco}
@@ -84,6 +153,7 @@ export default function CadastroAcomodacoes() {
         <fieldset className={styles.grupo1}>
           <input
             type="text"
+            name="rua"
             id="rua"
             placeholder="Rua"
             value={acomodacoes.local.rua}
@@ -96,6 +166,7 @@ export default function CadastroAcomodacoes() {
           />
           <input
             type="number"
+            name="numero"
             id="numero"
             placeholder="Nº"
             value={acomodacoes.local.numero}
@@ -112,6 +183,7 @@ export default function CadastroAcomodacoes() {
 
           <input
             type="text"
+            name="complemento"
             id="complemento"
             placeholder="Complemento"
             value={acomodacoes.local.complemento}
@@ -128,6 +200,7 @@ export default function CadastroAcomodacoes() {
 
           <input
             type="text"
+            name="cidade"
             id="cidade"
             placeholder="Cidade"
             value={acomodacoes.local.cidade}
@@ -140,8 +213,8 @@ export default function CadastroAcomodacoes() {
           />
 
           <select
-            id="estados"
-            name="estados"
+            name="estado"
+            id="estado"
             value={acomodacoes.local.estado}
             onChange={(event) =>
               setAcomodacoes({
@@ -151,37 +224,16 @@ export default function CadastroAcomodacoes() {
             }
           >
             <option value="selecao">Selecione um estado</option>
-            <option value="acre">AC</option>
-            <option value="alagoas">AL</option>
-            <option value="amapa">AP</option>
-            <option value="amazonas">AM</option>
-            <option value="bahia">BA</option>
-            <option value="ceara">CE</option>
-            <option value="espiritoSanto">ES</option>
-            <option value="goias">GO</option>
-            <option value="maranhao">MA</option>
-            <option value="matoGrosso">MT</option>
-            <option value="matoGrossoDoSul">MS</option>
-            <option value="minasGerais">MG</option>
-            <option value="para">PA</option>
-            <option value="paraiba">PB</option>
-            <option value="parana">PR</option>
-            <option value="pernambuco">PE</option>
-            <option value="piaui">PI</option>
-            <option value="rioDeJaneiro">RJ</option>
-            <option value="rioGrandeDoNorte">RN</option>
-            <option value="rioGrandeDoSul">RS</option>
-            <option value="rondonia">RO</option>
-            <option value="roraima">RR</option>
-            <option value="santaCatarina">SC</option>
-            <option value="saoPaulo">SP</option>
-            <option value="sergipe">SE</option>
-            <option value="tocantins">TO</option>
-            <option value="distritoFederal">DF</option>
+            {estados.map((uf) => (
+              <option key={uf} value={uf}>
+                {uf}
+              </option>
+            ))}
           </select>
 
           <input
             type="text"
+            name="pais"
             id="pais"
             placeholder="País"
             value={acomodacoes.local.pais}
@@ -195,6 +247,7 @@ export default function CadastroAcomodacoes() {
 
           <input
             type="number"
+            name="cep"
             id="cep"
             placeholder="CEP"
             value={acomodacoes.local.cep}
@@ -212,6 +265,7 @@ export default function CadastroAcomodacoes() {
         <label htmlFor="numeroDePessoas">Numero De Pessoas</label>
         <input
           type="number"
+          name="numeroDePessoas"
           id="numeroDePessoas"
           placeholder="Quantidade de Pessoas"
           value={acomodacoes.numeroDePessoas}
@@ -224,10 +278,14 @@ export default function CadastroAcomodacoes() {
         />
 
         <label htmlFor="comodidades">Comodidades</label>
-        <fieldset className={styles.grupo2}>
-          <label htmlFor="quartos">Quartos</label>
+        <fieldset className={styles.comodidades}>
+          <label htmlFor="quartos" id="quartosLabel">
+            Quartos
+          </label>
+          <span className={styles.espaco1}></span>
           <input
             type="number"
+            name="quartos"
             id="quartos"
             placeholder="Quantidade de quartos"
             value={acomodacoes.comodidades.quartos}
@@ -241,9 +299,14 @@ export default function CadastroAcomodacoes() {
               })
             }
           />
-          <label htmlFor="banheiros">Banheiros</label>
+          <span className={styles.espaco2}></span>
+          <label htmlFor="banheiros" id="banheirosLabel">
+            Banheiros
+          </label>
+          <span className={styles.espaco1}></span>
           <input
             type="number"
+            name="banheiros"
             id="banheiros"
             placeholder="Quantidade de banheiros"
             value={acomodacoes.comodidades.banheiros}
@@ -264,12 +327,16 @@ export default function CadastroAcomodacoes() {
           <label htmlFor="fumar">Fumantes</label>
           <input
             type="checkbox"
+            name="fumar"
             id="fumar"
             value={acomodacoes.regras.fumar as unknown as number}
             onChange={(event) =>
               setAcomodacoes({
                 ...acomodacoes,
-                regras: { ...acomodacoes.regras, fumar: !!event.target.value },
+                regras: {
+                  ...acomodacoes.regras,
+                  fumar: !!event.target.checked,
+                },
               })
             }
           />
@@ -277,6 +344,7 @@ export default function CadastroAcomodacoes() {
           <label htmlFor="animais">Animais</label>
           <input
             type="checkbox"
+            name="animais"
             id="animais"
             value={acomodacoes.regras.animais as unknown as number}
             onChange={(event) =>
@@ -284,7 +352,7 @@ export default function CadastroAcomodacoes() {
                 ...acomodacoes,
                 regras: {
                   ...acomodacoes.regras,
-                  animais: !!event.target.value,
+                  animais: !!event.target.checked,
                 },
               })
             }

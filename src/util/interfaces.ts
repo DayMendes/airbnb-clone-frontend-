@@ -4,11 +4,12 @@ export interface Acomodacao {
   idLocador: string;
   descricao: string;
   categoria: string;
+  imagem_url: string;
   imagem: string;
   preco: number;
   local: {
-    numero: number;
     rua: string;
+    numero: number;
     complemento: string;
     cidade: string;
     estado: string;
