@@ -13,10 +13,12 @@ export default function Login() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const idAcomodacao = (searchParams.get('id') || '');
+  const url = `/cadastro?id=${idAcomodacao}`;
 
   const [loginErro, setLoginErro] = useState(false);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  
 
   useEffect(() => setMostrarCaixaDeBusca(false), [setMostrarCaixaDeBusca]); // garantir que a caixa de busca não será mostrada
 
@@ -72,7 +74,7 @@ export default function Login() {
         )}
 
         <p>
-          Não tem cadastro? <Link to="/cadastro">Cadastre-se!</Link>
+          Não tem cadastro? <Link to={url}>Cadastre-se!</Link>
         </p>
       </div>
     </>

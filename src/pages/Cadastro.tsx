@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { AppContext } from "../AppContext";
 import styles from "../styles/pages/cadastro.module.css";
 import LoadingBar from "react-top-loading-bar";
+import { useSearchParams } from "react-router-dom";
 
 export default function Cadastro() {
   const { setMostrarCaixaDeBusca, setUserLogado, setUserName } = useContext(AppContext);
@@ -11,6 +12,9 @@ export default function Cadastro() {
   const navigate = useNavigate();
 
   const loadingRef = useRef(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const idAcomodacao = (searchParams.get('id') || '');
 
   const [cadastroErro, setCadastroErro] = useState(false);
   const [nome, setNome] = useState("");
@@ -32,7 +36,8 @@ export default function Cadastro() {
       });
       setUserLogado(true);
       setUserName(response.data.user.nome);
-      navigate("/");
+
+      { idAcomodacao === '' ? navigate("/") : navigate(`/${idAcomodacao}`)}
     } catch (error) {
       setCadastroErro(true);
     }

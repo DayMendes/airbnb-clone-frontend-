@@ -88,7 +88,6 @@ export default function DetalhesAcomodacao() {
         dataDeTermino: dataTermino,
       })
       .then((response) => {
-        alert("Reserva realizada com sucesso!");
         navigate("/reservado?referer=ok");
       })
       .catch((error) => {
