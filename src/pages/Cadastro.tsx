@@ -13,8 +13,8 @@ export default function Cadastro() {
 
   const loadingRef = useRef(null);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const idAcomodacao = (searchParams.get('id') || '');
+  const [searchParams] = useSearchParams();
+  const idAcomodacao = searchParams.get("id") || "";
 
   const [cadastroErro, setCadastroErro] = useState(false);
   const [nome, setNome] = useState("");
@@ -37,7 +37,11 @@ export default function Cadastro() {
       setUserLogado(true);
       setUserName(response.data.user.nome);
 
-      { idAcomodacao === '' ? navigate("/") : navigate(`/${idAcomodacao}`)}
+      if (idAcomodacao === "") {
+        navigate("/");
+      } else {
+        navigate(`/${idAcomodacao}`);
+      }
     } catch (error) {
       setCadastroErro(true);
     }

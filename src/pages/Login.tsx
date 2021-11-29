@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
 import { AppContext } from "../AppContext";
 import styles from "../styles/pages/login.module.css";
@@ -11,14 +11,13 @@ export default function Login() {
   const navigate = useNavigate();
   const loadingRef = useRef(null);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const idAcomodacao = (searchParams.get('id') || '');
+  const [searchParams] = useSearchParams();
+  const idAcomodacao = searchParams.get("id") || "";
   const url = `/cadastro?id=${idAcomodacao}`;
 
   const [loginErro, setLoginErro] = useState(false);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  
 
   useEffect(() => setMostrarCaixaDeBusca(false), [setMostrarCaixaDeBusca]); // garantir que a caixa de busca não será mostrada
 
@@ -34,7 +33,12 @@ export default function Login() {
       });
       setUserLogado(true);
       setUserName(response.data.user.nome);
-      { idAcomodacao === '' ? navigate("/") : navigate(`/${idAcomodacao}`)}
+
+      if (idAcomodacao === "") {
+        navigate("/");
+      } else {
+        navigate(`/${idAcomodacao}`);
+      }
     } catch (error) {
       setLoginErro(true);
     }
