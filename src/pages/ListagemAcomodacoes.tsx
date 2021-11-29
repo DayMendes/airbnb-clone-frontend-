@@ -32,7 +32,9 @@ export default function ListagemAcomodacoes() {
         }
 
         const queryString = qs.stringify(queryParams);
+        console.log(`${apiUrl}/acomodacoes?${queryString}`);
         response = await axios.get<Acomodacao[]>(`${apiUrl}/acomodacoes?${queryString}`);
+        console.log(response);
         return response;
       } catch (err) {
         setAcomodacoes([]);
