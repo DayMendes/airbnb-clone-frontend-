@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useContext, useEffect, useState, useMemo } from "react";
 import styles from "../styles/pages/cadastroAcomodacoes.module.css";
 import { Acomodacao } from "../util/interfaces";
