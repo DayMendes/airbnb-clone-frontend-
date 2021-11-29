@@ -1,4 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
+import styles from "../styles/pages/reservaRealizada.module.css";
 
 export default function ReservaRealizada() {
 
@@ -8,12 +9,12 @@ export default function ReservaRealizada() {
   return (
         <>
         { param === 'ok' ? (
-            <>
-            <h1>Reserva realizada com sucesso!</h1>
-            <p>
-            <Link to="/">Voltar para tela inicial</Link>
-            </p>
-            </>
+            <div className={styles.div}>
+                <h1 className={styles.titulo}>Reserva realizada com sucesso!</h1>
+                <p className={styles.link}>
+                <Link to="/">Voltar para tela inicial</Link>
+                </p>
+            </div>
         ) : <></>}
       </>
   );
