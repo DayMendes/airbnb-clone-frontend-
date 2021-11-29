@@ -15,7 +15,7 @@ export default function AcomdacaoCard({ acomodacao }: AcomodacaoProps) {
         {acomodacao.local.cidade} | {acomodacao.local.estado}
       </span>
 
-      <img src={acomodacao.imagem_url} alt={acomodacao.descricao} />
+      <img src={acomodacao.imagem} alt={acomodacao.descricao} />
     </section>
   );
 }
