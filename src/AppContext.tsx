@@ -20,8 +20,6 @@ interface AppContextData {
   userName: string;
   setUserName: (name: string) => void;
 
-  reservaRealizada: boolean;
-  setReservaRealizada: (booleano: boolean) => void;
 }
 
 interface ObjetoBuscaFiltro {
@@ -46,8 +44,6 @@ export function AppContextProvider(props: { children: ReactNode }) {
 
   const [userLogado, setUserLogado] = useState(false);
   const [userName, setUserName] = useState("");
-
-  const [reservaRealizada, setReservaRealizada] = useState(false);
 
   // verificar se o usuário já esta logado
   useEffect(() => {
@@ -77,8 +73,6 @@ export function AppContextProvider(props: { children: ReactNode }) {
     setUserLogado,
     userName,
     setUserName,
-    reservaRealizada,
-    setReservaRealizada
   };
   return <AppContext.Provider value={data}>{props.children}</AppContext.Provider>;
 }

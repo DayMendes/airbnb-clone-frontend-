@@ -1,21 +1,20 @@
-import { Link } from "react-router-dom"
-import { useContext } from "react";
-import { AppContext } from "../AppContext";
-
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function ReservaRealizada() {
-    
-    const { reservaRealizada, setReservaRealizada } = useContext(AppContext);
-    return (
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const param = (searchParams.get('referer') || '');
+
+  return (
         <>
-            { reservaRealizada ? (
-                <>
-                <h1>Reserva realizada com sucesso!</h1>
-                <p ><Link to="/">Voltar para tela inicial</Link></p>
-                </>
-            ) : <> </>
-            
-        }
-        </>
-    )
+        { param === 'ok' ? (
+            <>
+            <h1>Reserva realizada com sucesso!</h1>
+            <p>
+            <Link to="/">Voltar para tela inicial</Link>
+            </p>
+            </>
+        ) : <></>}
+      </>
+  );
 }

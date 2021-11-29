@@ -12,7 +12,6 @@ export default function Login() {
   const loadingRef = useRef(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const reservando = (searchParams.get('referer') || '');
   const idAcomodacao = (searchParams.get('id') || '');
 
   const [loginErro, setLoginErro] = useState(false);
@@ -33,7 +32,7 @@ export default function Login() {
       });
       setUserLogado(true);
       setUserName(response.data.user.nome);
-      { reservando === '' ? navigate("/") : navigate(`/${idAcomodacao}`)}
+      { idAcomodacao === '' ? navigate("/") : navigate(`/${idAcomodacao}`)}
     } catch (error) {
       setLoginErro(true);
     }

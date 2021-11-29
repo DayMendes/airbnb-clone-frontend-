@@ -89,11 +89,11 @@ export default function DetalhesAcomodacao() {
       })
       .then((response) => {
         alert("Reserva realizada com sucesso!");
-        navigate("/reservado");
+        navigate("/reservado?referer=ok");
       })
       .catch((error) => {
         if (error.response.status===401) {
-          navigate(`/login?referer=reservas&id=${id}`);
+          navigate(`/login?id=${id}`);
         } else {
           alert("Ocorreu um erro ao realizar sua reserva!");
         }
