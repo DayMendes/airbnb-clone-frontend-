@@ -93,7 +93,7 @@ export default function DetalhesAcomodacao() {
       })
       .catch((error) => {
         if (error.response.status===401) {
-          navigate("/login");
+          navigate(`/login?referer=reservas&id=${id}`);
         } else {
           alert("Ocorreu um erro ao realizar sua reserva!");
         }

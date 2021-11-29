@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
 import { AppContext } from "../AppContext";
 import styles from "../styles/pages/login.module.css";
@@ -9,8 +9,11 @@ export default function Login() {
   const { setMostrarCaixaDeBusca, setUserLogado, setUserName } = useContext(AppContext);
 
   const navigate = useNavigate();
-
   const loadingRef = useRef(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const reservando = (searchParams.get('referer') || '');
+  const idAcomodacao = (searchParams.get('id') || '');
 
   const [loginErro, setLoginErro] = useState(false);
   const [email, setEmail] = useState("");
@@ -30,7 +33,7 @@ export default function Login() {
       });
       setUserLogado(true);
       setUserName(response.data.user.nome);
-      navigate("/");
+      { reservando === '' ? navigate("/") : navigate(`/${idAcomodacao}`)}
     } catch (error) {
       setLoginErro(true);
     }
