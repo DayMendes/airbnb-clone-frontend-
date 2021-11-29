@@ -26,12 +26,14 @@ export default function CadastroAcomodacoes() {
   }, [imagem]);
 
   useEffect(() => {
+    axios.defaults.withCredentials = false;
     axios
       .get<IBGEUFResponse[]>(
         "https://servicodados.ibge.gov.br/api/v1/localidades/estados/",
       )
       .then((response) => {
         const estadosIniciais = response.data.map((uf) => uf.sigla);
+        axios.defaults.withCredentials = true;
 
         setEstados(estadosIniciais);
       });
