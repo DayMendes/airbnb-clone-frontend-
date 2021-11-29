@@ -78,6 +78,9 @@ export default function Navbar() {
             >
               Logoff
             </button>
+            <Link to="/acomodacoes" className={styles.novaAcomodacao}>
+              Cadastrar uma nova acomodação
+            </Link>
           </>
         ) : (
           <Link to="/login">Login</Link>

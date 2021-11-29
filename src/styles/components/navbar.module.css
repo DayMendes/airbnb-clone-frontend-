@@ -133,7 +133,7 @@
   filter: invert(39%) sepia(75%) saturate(1578%) hue-rotate(329deg) brightness(121%) contrast(117%);
 }
 
-.loginInfoContainer > a:last-child {
+.loginInfoContainer > a:first-child {
   position: absolute;
   top: 2.2rem;
   right: 2rem;
@@ -153,7 +153,7 @@
   transition: all 0.2s;
 }
 
-.loginInfoContainer > a:last-child:hover {
+.loginInfoContainer > a:first-child {
   background: #ff333a;
 }
 
@@ -166,7 +166,25 @@
   font-size: 1.2rem;
 }
 
-.logOff{
+.logOff {
+  position: absolute;
+
+  top: 4.8rem;
+  right: 2rem;
+
+  font-size: 0.9rem;
+  color: var(--red);
+
+  background: transparent;
+  border: none;
+  transition: color 0.15s;
+}
+
+.logOff:hover {
+  color: var(--red-highlight);
+}
+
+.novaAcomodacao {
   position: absolute;
 
   top: 3.6rem;
@@ -180,6 +198,6 @@
   transition: color 0.15s;
 }
 
-.logOff:hover{
+.novaAcomodacao:hover {
   color: var(--red-highlight);
 }
