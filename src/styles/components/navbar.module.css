@@ -128,7 +128,7 @@
   transition: all 0.15s;
 }
 
-.navbar > form > button > img:hover {
+.searchButton > img:hover {
   /* equivalent to color: var(--red) in svgs*/
   filter: invert(39%) sepia(75%) saturate(1578%) hue-rotate(329deg) brightness(121%) contrast(117%);
 }
